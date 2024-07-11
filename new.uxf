@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>387</x>
+      <y>27</y>
+      <w>189</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>Galerie
+--
+-fotos: List&lt;Foto&gt;
+--
++ addFoto(bild:bild) 
++ getFotos: List&lt;Foto&lt;
++ getFotoByUser(user: User) List&lt;Foto&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>828</x>
+      <y>36</y>
+      <w>171</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes>
+    <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>792</x>
+      <y>189</y>
+      <w>171</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes>
+    <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>405</x>
+      <y>252</y>
+      <w>189</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>
+User
+--
+-userName
+-nameId
+--
++ fotoLaden(foto:foto)	</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>18</x>
+      <y>36</y>
+      <w>243</w>
+      <h>369</h>
+    </coordinates>
+    <panel_attributes>Bilder
+--
+-bildId: Long
+-name: String
+-beschreibung: String
+-lokation: String
+-datum: Date 
+-imageData: byte[]
+--
++ ladeHinzufügen(pfad String):void
++ bildLöschen(): void  
++ Fotobeschreibung: String): void 
++ getFotoInformation(): PhotoDetails  
++ get FotoId         
++ get Datum(): void          
++ setName(name: String): void    
++ setBeschreibung(description: String): void                
++ setImageData(data: byte[]): void 
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>252</x>
+      <y>27</y>
+      <w>144</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+m1=1
+m2=n
+</panel_attributes>
+    <additional_attributes>140.0;10.0;10.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>252</x>
+      <y>54</y>
+      <w>171</w>
+      <h>234</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+m1=1
+m2=n
+</panel_attributes>
+    <additional_attributes>170.0;240.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
