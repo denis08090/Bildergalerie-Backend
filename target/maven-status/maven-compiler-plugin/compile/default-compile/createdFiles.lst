@@ -1,1 +1,4 @@
+com/example/Bildergalerie/model/Photo.class
+com/example/Bildergalerie/controller/PhotoController.class
 com/example/Bildergalerie/BildergalerieApplication.class
+com/example/Bildergalerie/model/PhotoRepository.class

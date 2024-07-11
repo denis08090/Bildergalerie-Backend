@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Archive</title>
+</head>
+<body>
+<h1>Fotogalerie</h1>
+<p>Füge ein Foto hinzu</p>
+<form action="/addPhoto" method="post" enctype="multipart/form-data">
+    <label>Fototitel: </label>
+    <input type="text" id="title" name="title" required> <br>
+    <label>Beschreibung</label>
+    <input type="text" id="description" name="description" required><br>
+    <label>Lokation</label>
+    <input type="text" id="location" name="location" required><br>
+    <label>Datum</label>
+    <input type="date" id="date" name="date" required><br>
+    <label for="file">Suche ein Bild aus:</label>
+    <input type="file" id="file" name="file" required><br>
+    <button type="submit">Hochladen</button>
+</form>
+<p>Have a look at the image list <a href="/photos">here</a></p>
+</body>
+</html>
