@@ -1,9 +1,6 @@
 package com.example.Bildergalerie.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Blob;
 import java.sql.Date;
 
@@ -11,60 +8,71 @@ import java.sql.Date;
 public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private String description;
-    private String location;
-    private Date date;
-    private Blob picture;
+    private Long photoId;
+    private String photoName;
+    private String photoDescription;
+    private String photoLocation;
+    private Date photoDate;
+    private Blob photoPicture;
 
-    // Getter und Setter
-    public Long getId() {
-        return id;
+    @ManyToOne
+    @JoinColumn(name = "albumId")
+    private Album album;
+
+    public Long getPhotoId() {
+        return photoId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPhotoId(Long photoId) {
+        this.photoId = photoId;
     }
 
-    public String getName() {
-        return name;
+    public String getPhotoName() {
+        return photoName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPhotoName(String photoName) {
+        this.photoName = photoName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPhotoDescription() {
+        return photoDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPhotoDescription(String photoDescription) {
+        this.photoDescription = photoDescription;
     }
 
-    public String getLocation() {
-        return location;
+    public String getPhotoLocation() {
+        return photoLocation;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setPhotoLocation(String photoLocation) {
+        this.photoLocation = photoLocation;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getPhotoDate() {
+        return photoDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setPhotoDate(Date photoDate) {
+        this.photoDate = photoDate;
     }
 
-    public Blob getPicture() {
-        return picture;
+    public Blob getPhotoPicture() {
+        return photoPicture;
     }
 
-    public void setPicture(Blob picture) {
-        this.picture = picture;
+
+    public void setPhotoPicture(Blob photoPicture) {
+        this.photoPicture = photoPicture;
     }
 
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
 }

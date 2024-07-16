@@ -2,12 +2,11 @@ package com.example.Bildergalerie.controller;
 
 import com.example.Bildergalerie.model.Photo;
 import com.example.Bildergalerie.model.PhotoRepository;
+import com.example.Bildergalerie.model.Album;
+import com.example.Bildergalerie.model.AlbumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
@@ -17,48 +16,44 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-
-
-@Controller
+@RestController
+@RequestMapping("/api/photos")
 public class PhotoController {
     @Autowired
     private PhotoRepository photoRepository;
 
-    @GetMapping("/")
-    public String home() {
-        return "index";
+    @Autowired
+    private AlbumRepository albumRepository;
+
+    @GetMapping
+    public List<Photo> getPhotos() {
+        return photoRepository.findAll();
     }
-    @PostMapping("/addPhoto")
-    public String addPhoto(
-            @RequestParam("title") String title,
-            @RequestParam("description") String description,
-            @RequestParam("location") String location,
-            @RequestParam("date") String date,
-            @RequestParam("file") MultipartFile file,
-            Model model) throws IOException, SQLException, ParseException {
+
+    @PostMapping
+    public Photo addPhoto(
+            @RequestParam("photoTitle") String photoTitle,
+            @RequestParam("photoDescription") String photoDescription,
+            @RequestParam("photoLocation") String photoLocation,
+            @RequestParam("photoDate") String photoDate,
+            @RequestParam("photoFile") MultipartFile photoFile,
+            @RequestParam("albumId") Long albumId) throws IOException, SQLException, ParseException {
 
         Photo newPhoto = new Photo();
-        newPhoto.setName(title);
-        newPhoto.setDescription(description);
-        newPhoto.setLocation(location);
+        newPhoto.setPhotoName(photoTitle);
+        newPhoto.setPhotoDescription(photoDescription);
+        newPhoto.setPhotoLocation(photoLocation);
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date sqlDate = new Date(format.parse(date).getTime());
-        newPhoto.setDate(sqlDate);
+        Date sqlDate = new Date(format.parse(photoDate).getTime());
+        newPhoto.setPhotoDate(sqlDate);
 
-        SerialBlob blob = new SerialBlob(file.getBytes());
-        newPhoto.setPicture(blob);
+        SerialBlob blob = new SerialBlob(photoFile.getBytes());
+        newPhoto.setPhotoPicture(blob);
 
-        photoRepository.save(newPhoto);
+        Album album = albumRepository.findById(albumId).orElseThrow(() -> new IllegalArgumentException("Invalid album Id:" + albumId));
+        newPhoto.setAlbum(album);
 
-        model.addAttribute("message", "Bravo du hast das Bilde erfolgreich Hochgeladen " + file.getOriginalFilename() + " !");
-        return "redirect:/";
-    }
-
-    @GetMapping("/photos")
-    public String getPhotos(Model model) {
-        List<Photo> photos = photoRepository.findAll();
-        model.addAttribute("photos", photos);
-        return "photos";
+        return photoRepository.save(newPhoto);
     }
 }
