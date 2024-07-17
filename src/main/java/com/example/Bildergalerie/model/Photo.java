@@ -1,5 +1,7 @@
 package com.example.Bildergalerie.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Blob;
 import java.sql.Date;
@@ -13,6 +15,8 @@ public class Photo {
     private String photoDescription;
     private String photoLocation;
     private Date photoDate;
+
+    @JsonIgnore
     private Blob photoPicture;
 
     @ManyToOne
@@ -62,7 +66,6 @@ public class Photo {
     public Blob getPhotoPicture() {
         return photoPicture;
     }
-
 
     public void setPhotoPicture(Blob photoPicture) {
         this.photoPicture = photoPicture;

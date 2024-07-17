@@ -1,9 +1,9 @@
 package com.example.Bildergalerie.controller;
 
-import com.example.Bildergalerie.model.Photo;
-import com.example.Bildergalerie.model.PhotoRepository;
 import com.example.Bildergalerie.model.Album;
 import com.example.Bildergalerie.model.AlbumRepository;
+import com.example.Bildergalerie.model.Photo;
+import com.example.Bildergalerie.model.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,10 +14,9 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 @RestController
-@RequestMapping("/api/photos")
+@RequestMapping("/photos")
 public class PhotoController {
     @Autowired
     private PhotoRepository photoRepository;
@@ -25,33 +24,28 @@ public class PhotoController {
     @Autowired
     private AlbumRepository albumRepository;
 
-    @GetMapping
-    public List<Photo> getPhotos() {
-        return photoRepository.findAll();
-    }
-
-    @PostMapping
+    @PostMapping("/addPhoto")
     public Photo addPhoto(
-            @RequestParam("photoTitle") String photoTitle,
-            @RequestParam("photoDescription") String photoDescription,
-            @RequestParam("photoLocation") String photoLocation,
-            @RequestParam("photoDate") String photoDate,
-            @RequestParam("photoFile") MultipartFile photoFile,
-            @RequestParam("albumId") Long albumId) throws IOException, SQLException, ParseException {
+            @RequestParam("albumId") Long albumId,
+            @RequestParam("title") String title,
+            @RequestParam("description") String description,
+            @RequestParam("location") String location,
+            @RequestParam("date") String date,
+            @RequestParam("file") MultipartFile file) throws IOException, SQLException, ParseException {
 
         Photo newPhoto = new Photo();
-        newPhoto.setPhotoName(photoTitle);
-        newPhoto.setPhotoDescription(photoDescription);
-        newPhoto.setPhotoLocation(photoLocation);
+        newPhoto.setPhotoName(title);
+        newPhoto.setPhotoDescription(description);
+        newPhoto.setPhotoLocation(location);
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date sqlDate = new Date(format.parse(photoDate).getTime());
+        Date sqlDate = new Date(format.parse(date).getTime());
         newPhoto.setPhotoDate(sqlDate);
 
-        SerialBlob blob = new SerialBlob(photoFile.getBytes());
+        SerialBlob blob = new SerialBlob(file.getBytes());
         newPhoto.setPhotoPicture(blob);
 
-        Album album = albumRepository.findById(albumId).orElseThrow(() -> new IllegalArgumentException("Invalid album Id:" + albumId));
+        Album album = albumRepository.findById(albumId).orElseThrow(() -> new RuntimeException("Album not found"));
         newPhoto.setAlbum(album);
 
         return photoRepository.save(newPhoto);

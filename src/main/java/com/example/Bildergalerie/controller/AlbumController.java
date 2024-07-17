@@ -24,7 +24,7 @@ public class AlbumController {
     }
 
     @PutMapping("/{id}")
-    public Album editAlbum(@PathVariable int id, @RequestBody Album album) {
+    public Album editAlbum(@PathVariable Long id, @RequestBody Album album) {
         album.setAlbumId(id);
         return albumRepository.save(album);
     }
