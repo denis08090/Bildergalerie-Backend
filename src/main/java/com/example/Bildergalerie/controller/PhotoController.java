@@ -14,6 +14,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @RestController
 @RequestMapping("/photos")
@@ -50,4 +51,10 @@ public class PhotoController {
 
         return photoRepository.save(newPhoto);
     }
+
+    @GetMapping("/album/{albumId}")
+    public List<Photo> getPhotosByAlbum(@PathVariable Long albumId) {
+        return photoRepository.findByAlbumAlbumId(albumId);
+    }
 }
+

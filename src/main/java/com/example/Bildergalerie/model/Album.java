@@ -1,9 +1,7 @@
 package com.example.Bildergalerie.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Album {
@@ -11,6 +9,9 @@ public class Album {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long albumId;
     private String albumTitle;
+
+    @OneToMany(mappedBy = "album")
+    private List<Photo> photos;
 
     // Getters and Setters
     public Long getAlbumId() {
