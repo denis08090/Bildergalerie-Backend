@@ -11,7 +11,7 @@ public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long photoId;
-    private String photoName;
+    private String photoTitle;
     private String photoDescription;
     private String photoLocation;
     private Date photoDate;
@@ -31,12 +31,12 @@ public class Photo {
         this.photoId = photoId;
     }
 
-    public String getPhotoName() {
-        return photoName;
+    public String getPhotoTitle() {
+        return photoTitle;
     }
 
-    public void setPhotoName(String photoName) {
-        this.photoName = photoName;
+    public void setPhotoTitle(String photoTitle) {
+        this.photoTitle = photoTitle;
     }
 
     public String getPhotoDescription() {

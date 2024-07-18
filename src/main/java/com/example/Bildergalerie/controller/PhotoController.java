@@ -14,8 +14,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/photos")
@@ -36,7 +34,7 @@ public class PhotoController {
             @RequestParam("file") MultipartFile file) throws IOException, SQLException, ParseException {
 
         Photo newPhoto = new Photo();
-        newPhoto.setPhotoName(title);
+        newPhoto.setPhotoTitle(title);
         newPhoto.setPhotoDescription(description);
         newPhoto.setPhotoLocation(location);
 
@@ -51,15 +49,5 @@ public class PhotoController {
         newPhoto.setAlbum(album);
 
         return photoRepository.save(newPhoto);
-    }
-
-    @GetMapping("/{id}")
-    public Photo getPhotoById(@PathVariable Long id) {
-        return photoRepository.findById(id).orElseThrow(() -> new RuntimeException("Photo not found"));
-    }
-
-    @GetMapping
-    public List<Photo> getAllPhotos() {
-        return photoRepository.findAll();
     }
 }

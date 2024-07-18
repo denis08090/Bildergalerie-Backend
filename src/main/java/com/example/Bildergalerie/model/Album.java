@@ -10,7 +10,7 @@ public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long albumId;
-    private String albumTitel;
+    private String albumTitle;
 
     // Getters and Setters
     public Long getAlbumId() {
@@ -21,11 +21,11 @@ public class Album {
         this.albumId = albumId;
     }
 
-    public String getAlbumTitel() {
-        return albumTitel;
+    public String getAlbumTitle() {
+        return albumTitle;
     }
 
-    public void setAlbumTitel(String albumTitel) {
-        this.albumTitel = albumTitel;
+    public void setAlbumTitle(String albumTitel) {
+        this.albumTitle = albumTitel;
     }
 }
