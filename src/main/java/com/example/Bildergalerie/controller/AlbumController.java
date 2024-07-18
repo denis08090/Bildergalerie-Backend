@@ -23,14 +23,17 @@ public class AlbumController {
         return albumRepository.save(album);
     }
 
-    @PutMapping("/{id}")
-    public Album editAlbum(@PathVariable Long id, @RequestBody Album album) {
-        album.setAlbumId(id);
-        return albumRepository.save(album);
+    @PutMapping("/{id}") //path vlt ändern
+    public Album updateAlbum(
+            @PathVariable Long albumId,
+            @RequestParam("title") String title) {
+        Album existingAlbum = albumRepository.findById(albumId).orElseThrow(() -> new RuntimeException("Album not found"));
+        existingAlbum.setAlbumTitle(title);
+        return albumRepository.save(existingAlbum);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteAlbum(@PathVariable Long id) {
-        albumRepository.deleteById(id);
+    @DeleteMapping("/deleteAlbum/{albumId}")
+    public void deleteAlbum(@PathVariable Long albumId) {
+        albumRepository.deleteById(albumId);
     }
 }

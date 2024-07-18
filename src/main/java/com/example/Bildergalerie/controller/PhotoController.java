@@ -56,5 +56,36 @@ public class PhotoController {
     public List<Photo> getPhotosByAlbum(@PathVariable Long albumId) {
         return photoRepository.findByAlbumAlbumId(albumId);
     }
-}
 
+    @PutMapping("/updatePhoto/{photoId}")
+    public Photo updatePhoto(
+            @PathVariable Long photoId,
+            @RequestParam("title") String title,
+            @RequestParam("description") String description,
+            @RequestParam("location") String location,
+            @RequestParam("date") String date,
+            @RequestParam(value = "file", required = false) MultipartFile file) throws IOException, SQLException, ParseException {
+
+        Photo existingPhoto = photoRepository.findById(photoId).orElseThrow(() -> new RuntimeException("Photo not found"));
+
+        existingPhoto.setPhotoTitle(title);
+        existingPhoto.setPhotoDescription(description);
+        existingPhoto.setPhotoLocation(location);
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date sqlDate = new Date(format.parse(date).getTime());
+        existingPhoto.setPhotoDate(sqlDate);
+
+        if (file != null) {
+            SerialBlob blob = new SerialBlob(file.getBytes());
+            existingPhoto.setPhotoPicture(blob);
+        }
+
+        return photoRepository.save(existingPhoto);
+    }
+
+    @DeleteMapping("/deletePhoto/{photoId}")
+    public void deletePhoto(@PathVariable Long photoId) {
+        photoRepository.deleteById(photoId);
+    }
+}
