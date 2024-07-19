@@ -10,7 +10,7 @@ public class Album {
     private Long albumId;
     private String albumTitle;
 
-    @OneToMany(mappedBy = "album")
+    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Photo> photos;
 
     // Getters and Setters
