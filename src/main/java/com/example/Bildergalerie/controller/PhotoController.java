@@ -16,6 +16,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+/**
+ * Controller für die Verwaltung von Fotos.
+ */
 @RestController
 @RequestMapping("/photos")
 public class PhotoController {
@@ -25,6 +28,20 @@ public class PhotoController {
     @Autowired
     private AlbumRepository albumRepository;
 
+    /**
+     * Fügt ein neues Foto hinzu.
+     *
+     * @param albumId Die ID des Albums, dem das Foto hinzugefügt wird
+     * @param title Der Titel des Fotos
+     * @param description Die Beschreibung des Fotos
+     * @param location Der Ort des Fotos
+     * @param date Das Datum des Fotos
+     * @param file Die Datei des Fotos
+     * @return Das hinzugefügte Foto
+     * @throws IOException
+     * @throws SQLException
+     * @throws ParseException
+     */
     @PostMapping("/addPhoto")
     public Photo addPhoto(
             @RequestParam("albumId") Long albumId,
@@ -52,11 +69,31 @@ public class PhotoController {
         return photoRepository.save(newPhoto);
     }
 
+    /**
+     * Gibt eine Liste aller Fotos in einem bestimmten Album zurück.
+     *
+     * @param albumId Die ID des Albums
+     * @return Liste der Fotos im Album
+     */
     @GetMapping("/album/{albumId}")
     public List<Photo> getPhotosByAlbum(@PathVariable Long albumId) {
         return photoRepository.findByAlbumAlbumId(albumId);
     }
 
+    /**
+     * Aktualisiert ein bestehendes Foto.
+     *
+     * @param photoId Die ID des zu aktualisierenden Fotos
+     * @param title Der neue Titel des Fotos
+     * @param description Die neue Beschreibung des Fotos
+     * @param location Der neue Ort des Fotos
+     * @param date Das neue Datum des Fotos
+     * @param file (Optional) Die neue Datei des Fotos
+     * @return Das aktualisierte Foto
+     * @throws IOException
+     * @throws SQLException
+     * @throws ParseException
+     */
     @PutMapping("/updatePhoto/{photoId}")
     public Photo updatePhoto(
             @PathVariable Long photoId,
@@ -84,6 +121,11 @@ public class PhotoController {
         return photoRepository.save(existingPhoto);
     }
 
+    /**
+     * Löscht ein Foto.
+     *
+     * @param photoId Die ID des zu löschenden Fotos
+     */
     @DeleteMapping("/deletePhoto/{photoId}")
     public void deletePhoto(@PathVariable Long photoId) {
         photoRepository.deleteById(photoId);

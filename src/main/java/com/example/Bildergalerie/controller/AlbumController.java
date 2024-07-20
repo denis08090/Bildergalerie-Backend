@@ -10,22 +10,43 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controller für die Verwaltung von Alben.
+ */
 @RestController
 @RequestMapping("/albums")
 public class AlbumController {
     @Autowired
     private AlbumRepository albumRepository;
 
+    /**
+     * Gibt eine Liste aller Alben zurück.
+     *
+     * @return Liste der Alben
+     */
     @GetMapping
     public List<Album> getAllAlbums() {
         return albumRepository.findAll();
     }
 
+    /**
+     * Fügt ein neues Album hinzu.
+     *
+     * @param album Das hinzuzufügende Album
+     * @return Das hinzugefügte Album
+     */
     @PostMapping
     public Album addAlbum(@RequestBody Album album) {
         return albumRepository.save(album);
     }
 
+    /**
+     * Aktualisiert ein bestehendes Album.
+     *
+     * @param albumId Die ID des zu aktualisierenden Albums
+     * @param title Der neue Titel des Albums
+     * @return ResponseEntity mit dem aktualisierten Album
+     */
     @PutMapping("/{albumId}")
     public ResponseEntity<Album> updateAlbum(
             @PathVariable Long albumId,
@@ -41,6 +62,12 @@ public class AlbumController {
         return ResponseEntity.ok(albumRepository.save(existingAlbum));
     }
 
+    /**
+     * Löscht ein Album.
+     *
+     * @param albumId Die ID des zu löschenden Albums
+     * @return ResponseEntity ohne Inhalt
+     */
     @DeleteMapping("/deleteAlbum/{albumId}")
     public ResponseEntity<Void> deleteAlbum(@PathVariable Long albumId) {
         Optional<Album> existingAlbumOptional = albumRepository.findById(albumId);

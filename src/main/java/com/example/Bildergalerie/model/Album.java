@@ -3,6 +3,9 @@ package com.example.Bildergalerie.model;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * Repräsentiert ein Fotoalbum.
+ */
 @Entity
 public class Album {
     @Id
@@ -26,7 +29,7 @@ public class Album {
         return albumTitle;
     }
 
-    public void setAlbumTitle(String albumTitel) {
-        this.albumTitle = albumTitel;
+    public void setAlbumTitle(String albumTitle) {
+        this.albumTitle = albumTitle;
     }
 }

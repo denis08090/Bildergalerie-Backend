@@ -6,6 +6,9 @@ import javax.persistence.*;
 import java.sql.Blob;
 import java.sql.Date;
 
+/**
+ * Repräsentiert ein Foto.
+ */
 @Entity
 public class Photo {
     @Id
