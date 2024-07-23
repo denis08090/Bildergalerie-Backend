@@ -17,12 +17,21 @@ public class Album {
     private List<Photo> photos;
 
     // Getters and Setters
+
     public Long getAlbumId() {
         return albumId;
     }
 
     public void setAlbumId(Long albumId) {
         this.albumId = albumId;
+    }
+
+    public List<Photo> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
     }
 
     public String getAlbumTitle() {
