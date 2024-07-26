@@ -44,7 +44,6 @@ class PhotoControllerTest {
 
         Photo photo = new Photo();
         photo.setPhotoTitle("Test Photo");
-        photo.setPhotoDescription("Test Description");
         photo.setPhotoLocation("Test Location");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date sqlDate = new Date(format.parse("2023-01-01").getTime());
@@ -84,7 +83,6 @@ class PhotoControllerTest {
         Photo photo = new Photo();
         photo.setPhotoId(1L);
         photo.setPhotoTitle("Old Title");
-        photo.setPhotoDescription("Old Description");
         photo.setPhotoLocation("Old Location");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date sqlDate = new Date(format.parse("2022-01-01").getTime());
@@ -97,7 +95,6 @@ class PhotoControllerTest {
 
         assertNotNull(result);
         assertEquals("New Title", result.getPhotoTitle());
-        assertEquals("New Description", result.getPhotoDescription());
         assertEquals("New Location", result.getPhotoLocation());
         verify(photoRepository, times(1)).findById(1L);
         verify(photoRepository, times(1)).save(any(Photo.class));

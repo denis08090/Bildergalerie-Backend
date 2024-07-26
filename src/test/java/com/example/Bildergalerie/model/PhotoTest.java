@@ -37,19 +37,6 @@ class PhotoTest {
         assertEquals("test", photo.getPhotoTitle());
     }
 
-    @Test
-    void getPhotoDescription() {
-        Photo photo = new Photo();
-        photo.setPhotoDescription("test");
-        assertEquals("test", photo.getPhotoDescription());
-    }
-
-    @Test
-    void setPhotoDescription() {
-        Photo photo = new Photo();
-        photo.setPhotoDescription("test");
-        assertEquals("test", photo.getPhotoDescription());
-    }
 
     @Test
     void getPhotoLocation() {

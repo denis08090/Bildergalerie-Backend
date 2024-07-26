@@ -12,7 +12,14 @@ import java.sql.Blob;
 import java.sql.Date;
 
 /**
- * Repräsentiert ein Foto.
+ * Represents a photo in an album.
+ *
+ * This class includes information about the photo such as the title, description,
+ * location, date, and a reference to the album it belongs to.
+ *
+ * @version 1.0
+ * @since 2024-07-26
+ * @autor Denis Roos
  */
 @Entity
 public class Photo {
@@ -20,10 +27,8 @@ public class Photo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long photoId;
     @NotEmpty(message = "Photo title must not be empty")
-    @Size(min = 1, max = 100, message = "Photo title must be between 1 and 100 characters")
+    @Size(min = 1, max = 500, message = "Photo title must be between 1 and 100 characters")
     private String photoTitle;
-    @Size(max = 500, message = "Description should not exceed 500 characters")
-    private String photoDescription;
     @NotEmpty(message = "Photo location must not be empty")
     @Size(min = 1, max = 100, message = "Location must be between 1 and 100 characters")
     private String photoLocation;
@@ -53,14 +58,6 @@ public class Photo {
 
     public void setPhotoTitle(String photoTitle) {
         this.photoTitle = photoTitle;
-    }
-
-    public String getPhotoDescription() {
-        return photoDescription;
-    }
-
-    public void setPhotoDescription(String photoDescription) {
-        this.photoDescription = photoDescription;
     }
 
     public String getPhotoLocation() {

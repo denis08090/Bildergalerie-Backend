@@ -6,9 +6,14 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
-
 /**
- * Repräsentiert ein Fotoalbum.
+ * Represents a photo album.
+ *
+ * This class includes the album ID, title, and a list of photos.
+ *
+ * @version 1.0
+ * @since 2024-07-26
+ * @author [Denis Roos]
  */
 @Entity
 public class Album {
@@ -18,6 +23,7 @@ public class Album {
 
     @NotNull(message = "Album title must not be null")
     @Size(min = 1, max = 100, message = "Album title must be between 1 and 100 characters")
+    @Column(unique = true, nullable = false)
     private String albumTitle;
 
     @JsonManagedReference

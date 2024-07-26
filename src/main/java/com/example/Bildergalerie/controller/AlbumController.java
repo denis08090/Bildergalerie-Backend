@@ -11,7 +11,14 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Controller für die Verwaltung von Alben.
+ * REST controller for managing albums.
+ *
+ * This controller provides endpoints for retrieving, adding, updating,
+ * and deleting albums.
+ *
+ * @version 1.0
+ * @since 2024-07-26
+ * @author Denis Roos
  */
 @RestController
 @RequestMapping("/albums")
@@ -20,20 +27,21 @@ public class AlbumController {
     private AlbumRepository albumRepository;
 
     /**
-     * Gibt eine Liste aller Alben zurück.
+     * Retrieves a list of all albums.
      *
-     * @return Liste der Alben
+     * @return List of albums
      */
     @GetMapping
     public List<Album> getAllAlbums() {
         return albumRepository.findAll();
     }
 
+
     /**
-     * Fügt ein neues Album hinzu.
+     * Adds a new album.
      *
-     * @param album Das hinzuzufügende Album
-     * @return Das hinzugefügte Album
+     * @param album The album to be added
+     * @return The added album
      */
     @PostMapping
     public Album addAlbum(@RequestBody Album album) {
@@ -41,11 +49,11 @@ public class AlbumController {
     }
 
     /**
-     * Aktualisiert ein bestehendes Album.
-     *
-     * @param albumId Die ID des zu aktualisierenden Albums
-     * @param title Der neue Titel des Albums
-     * @return ResponseEntity mit dem aktualisierten Album
+            * Updates an existing album.
+            *
+            * @param albumId The ID of the album to update
+     * @param title The new title of the album
+     * @return ResponseEntity with the updated album
      */
     @PutMapping("/{albumId}")
     public ResponseEntity<Album> updateAlbum(
@@ -63,10 +71,10 @@ public class AlbumController {
     }
 
     /**
-     * Löscht ein Album.
+     * Deletes an album.
      *
-     * @param albumId Die ID des zu löschenden Albums
-     * @return ResponseEntity ohne Inhalt
+     * @param albumId The ID of the album to delete
+     * @return ResponseEntity with no content
      */
     @DeleteMapping("/deleteAlbum/{albumId}")
     public ResponseEntity<Void> deleteAlbum(@PathVariable Long albumId) {

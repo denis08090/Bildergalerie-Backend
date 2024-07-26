@@ -17,7 +17,14 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
- * Controller für die Verwaltung von Fotos.
+ * REST controller for managing photos in the application.
+ *
+ * This controller provides endpoints for adding, retrieving, updating,
+ * and deleting photos.
+ *
+ * @version 1.0
+ * @since 2024-07-26
+ * @author Denis Roos
  */
 @RestController
 @RequestMapping("/photos")
@@ -29,18 +36,18 @@ public class PhotoController {
     private AlbumRepository albumRepository;
 
     /**
-     * Fügt ein neues Foto hinzu.
+     * Adds a new photo to an album.
      *
-     * @param albumId Die ID des Albums, dem das Foto hinzugefügt wird
-     * @param title Der Titel des Fotos
-     * @param description Die Beschreibung des Fotos
-     * @param location Der Ort des Fotos
-     * @param date Das Datum des Fotos
-     * @param file Die Datei des Fotos
-     * @return Das hinzugefügte Foto
-     * @throws IOException
-     * @throws SQLException
-     * @throws ParseException
+     * @param albumId The ID of the album to which the photo is added
+     * @param title The title of the photo
+     * @param description The description of the photo
+     * @param location The location of the photo
+     * @param date The date the photo was taken
+     * @param file The file representing the photo
+     * @return The added photo
+     * @throws IOException if an error occurs while reading the file
+     * @throws SQLException if an error occurs with SQL operations
+     * @throws ParseException if an error occurs while parsing the date
      */
     @PostMapping("/addPhoto")
     public Photo addPhoto(
@@ -53,7 +60,6 @@ public class PhotoController {
 
         Photo newPhoto = new Photo();
         newPhoto.setPhotoTitle(title);
-        newPhoto.setPhotoDescription(description);
         newPhoto.setPhotoLocation(location);
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -70,30 +76,32 @@ public class PhotoController {
     }
 
     /**
-     * Gibt eine Liste aller Fotos in einem bestimmten Album zurück.
+     * Retrieves a list of all photos in a specific album.
      *
-     * @param albumId Die ID des Albums
-     * @return Liste der Fotos im Album
+     * @param albumId The ID of the album
+     * @return A list of photos in the album
      */
     @GetMapping("/album/{albumId}")
     public List<Photo> getPhotosByAlbum(@PathVariable Long albumId) {
         return photoRepository.findByAlbumAlbumId(albumId);
     }
 
+
     /**
-     * Aktualisiert ein bestehendes Foto.
+     * Updates an existing photo.
      *
-     * @param photoId Die ID des zu aktualisierenden Fotos
-     * @param title Der neue Titel des Fotos
-     * @param description Die neue Beschreibung des Fotos
-     * @param location Der neue Ort des Fotos
-     * @param date Das neue Datum des Fotos
-     * @param file (Optional) Die neue Datei des Fotos
-     * @return Das aktualisierte Foto
-     * @throws IOException
-     * @throws SQLException
-     * @throws ParseException
+     * @param photoId The ID of the photo to be updated
+     * @param title The new title of the photo
+     * @param description The new description of the photo
+     * @param location The new location of the photo
+     * @param date The new date of the photo
+     * @param file (Optional) The new file representing the photo
+     * @return The updated photo
+     * @throws IOException if an error occurs while reading the file
+     * @throws SQLException if an error occurs with SQL operations
+     * @throws ParseException if an error occurs while parsing the date
      */
+
     @PutMapping("/updatePhoto/{photoId}")
     public Photo updatePhoto(
             @PathVariable Long photoId,
@@ -106,7 +114,7 @@ public class PhotoController {
         Photo existingPhoto = photoRepository.findById(photoId).orElseThrow(() -> new RuntimeException("Photo not found"));
 
         existingPhoto.setPhotoTitle(title);
-        existingPhoto.setPhotoDescription(description);
+
         existingPhoto.setPhotoLocation(location);
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -122,9 +130,9 @@ public class PhotoController {
     }
 
     /**
-     * Löscht ein Foto.
+     * Deletes a photo.
      *
-     * @param photoId Die ID des zu löschenden Fotos
+     * @param photoId The ID of the photo to be deleted
      */
     @DeleteMapping("/deletePhoto/{photoId}")
     public void deletePhoto(@PathVariable Long photoId) {
