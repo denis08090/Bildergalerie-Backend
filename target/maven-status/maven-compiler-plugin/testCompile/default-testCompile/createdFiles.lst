@@ -1,6 +1,6 @@
-com/example/Bildergalerie/controller/AlbumControllerTest.class
-com/example/Bildergalerie/BildergalerieApplicationTests.class
-com/example/Bildergalerie/config/WebConfigTest.class
-com/example/Bildergalerie/controller/PhotoControllerTest.class
-com/example/Bildergalerie/model/AlbumTest.class
-com/example/Bildergalerie/model/PhotoTest.class
+com\example\Bildergalerie\BildergalerieApplicationTests.class
+com\example\Bildergalerie\controller\AlbumControllerTest.class
+com\example\Bildergalerie\model\PhotoTest.class
+com\example\Bildergalerie\config\WebConfigTest.class
+com\example\Bildergalerie\model\AlbumTest.class
+com\example\Bildergalerie\controller\PhotoControllerTest.class

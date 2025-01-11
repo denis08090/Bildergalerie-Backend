@@ -3,6 +3,8 @@ package com.example.Bildergalerie.controller;
 import com.example.Bildergalerie.model.User;
 import com.example.Bildergalerie.model.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
@@ -27,12 +29,16 @@ public class UserController {
      * Adds a new user.
      *
      * @param user The user object to be added
-     * @return The added user
+     * @return The register user
      */
-    @PostMapping("/addUser")
+    @PostMapping("/register")
     public User addUser(@Valid @RequestBody User user) {
+
+        User newUser = userRepository.save(user);
         return userRepository.save(user);
     }
+
+
 
     /**
      * Retrieves a list of all users.

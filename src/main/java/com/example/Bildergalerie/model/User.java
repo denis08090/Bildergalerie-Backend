@@ -18,6 +18,7 @@ public class User {
     @NotEmpty(message = "Username must not be empty")
     @Size(min = 1, max = 50, message = "Username must be between 1 and 50 characters")
     @UniqueElements(message = "Username is already used")
+    @Column(unique = true)
     private String user_name;
 
     @NotEmpty(message = "Firstname must not be empty")
@@ -30,7 +31,7 @@ public class User {
 
     @NotEmpty(message = "E-Mail must not be empty")
     @Email
-    @UniqueElements(message = "E-Mail is already used")
+    @Column(unique = true)
     private String email;
 
     @NotEmpty(message = "Password must not be empty")
