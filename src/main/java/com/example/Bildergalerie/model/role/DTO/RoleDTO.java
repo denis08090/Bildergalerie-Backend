@@ -1,4 +1,7 @@
-package com.example.Bildergalerie.DTO;
+package com.example.Bildergalerie.model.role.DTO;
+
+import com.example.Bildergalerie.DTO.AuthorityDTO;
+import com.example.Bildergalerie.generic.ExtendedDTO;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
