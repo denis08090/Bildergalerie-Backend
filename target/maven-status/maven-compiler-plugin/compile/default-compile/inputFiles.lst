@@ -1,8 +1,8 @@
-/home/denis/Desktop/Programming/LB Frontend & Backend/Bildergalerie-Backend/src/main/java/com/example/Bildergalerie/model/AlbumRepository.java
-/home/denis/Desktop/Programming/LB Frontend & Backend/Bildergalerie-Backend/src/main/java/com/example/Bildergalerie/BildergalerieApplication.java
-/home/denis/Desktop/Programming/LB Frontend & Backend/Bildergalerie-Backend/src/main/java/com/example/Bildergalerie/model/Album.java
-/home/denis/Desktop/Programming/LB Frontend & Backend/Bildergalerie-Backend/src/main/java/com/example/Bildergalerie/config/WebConfig.java
-/home/denis/Desktop/Programming/LB Frontend & Backend/Bildergalerie-Backend/src/main/java/com/example/Bildergalerie/model/PhotoRepository.java
-/home/denis/Desktop/Programming/LB Frontend & Backend/Bildergalerie-Backend/src/main/java/com/example/Bildergalerie/model/Photo.java
-/home/denis/Desktop/Programming/LB Frontend & Backend/Bildergalerie-Backend/src/main/java/com/example/Bildergalerie/controller/PhotoController.java
-/home/denis/Desktop/Programming/LB Frontend & Backend/Bildergalerie-Backend/src/main/java/com/example/Bildergalerie/controller/AlbumController.java
+/home/denis/Desktop/LB-Projekt-M294-295_Denis-Roos/Bildergalerie-Backend/src/main/java/com/example/Bildergalerie/config/WebConfig.java
+/home/denis/Desktop/LB-Projekt-M294-295_Denis-Roos/Bildergalerie-Backend/src/main/java/com/example/Bildergalerie/BildergalerieApplication.java
+/home/denis/Desktop/LB-Projekt-M294-295_Denis-Roos/Bildergalerie-Backend/src/main/java/com/example/Bildergalerie/model/Photo.java
+/home/denis/Desktop/LB-Projekt-M294-295_Denis-Roos/Bildergalerie-Backend/src/main/java/com/example/Bildergalerie/controller/PhotoController.java
+/home/denis/Desktop/LB-Projekt-M294-295_Denis-Roos/Bildergalerie-Backend/src/main/java/com/example/Bildergalerie/model/AlbumRepository.java
+/home/denis/Desktop/LB-Projekt-M294-295_Denis-Roos/Bildergalerie-Backend/src/main/java/com/example/Bildergalerie/model/PhotoRepository.java
+/home/denis/Desktop/LB-Projekt-M294-295_Denis-Roos/Bildergalerie-Backend/src/main/java/com/example/Bildergalerie/controller/AlbumController.java
+/home/denis/Desktop/LB-Projekt-M294-295_Denis-Roos/Bildergalerie-Backend/src/main/java/com/example/Bildergalerie/model/Album.java
