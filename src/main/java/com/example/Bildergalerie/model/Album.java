@@ -30,6 +30,10 @@ public class Album {
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Photo> photos;
 
+    //@ManyToOne(optional = false) // Ein Album muss immer einem User zugeordnet sein
+    @JoinColumn(name = "user_id", nullable = false) // Name der Fremdschlüsselspalte in der Datenbank
+    private Long userId;
+
     public Long getAlbumId() {
         return albumId;
     }
@@ -52,5 +56,13 @@ public class Album {
 
     public void setPhotos(List<Photo> photos) {
         this.photos = photos;
+    }
+
+    public Long getUserId(Long userId) {
+        return this.userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

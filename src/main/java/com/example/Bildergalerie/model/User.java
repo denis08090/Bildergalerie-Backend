@@ -9,10 +9,11 @@ import javax.validation.constraints.*;
 import java.sql.Blob;
 import java.sql.Date;
 
+@Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    public Long userId;
 
     @NotEmpty(message = "Username must not be empty")
     @Size(min = 1, max = 50, message = "Username must be between 1 and 50 characters")
