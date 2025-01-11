@@ -26,12 +26,15 @@ public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long photoId;
+
     @NotEmpty(message = "Photo title must not be empty")
     @Size(min = 1, max = 500, message = "Photo title must be between 1 and 100 characters")
     private String photoTitle;
+
     @NotEmpty(message = "Photo location must not be empty")
     @Size(min = 1, max = 100, message = "Location must be between 1 and 100 characters")
     private String photoLocation;
+
     @NotNull(message = "Date must not be null")
     @PastOrPresent(message = "Date cannot be in the future")
     private Date photoDate;
@@ -52,27 +55,27 @@ public class Photo {
         this.photoId = photoId;
     }
 
-    public String getPhotoTitle() {
+    public @NotEmpty(message = "Photo title must not be empty") @Size(min = 1, max = 500, message = "Photo title must be between 1 and 100 characters") String getPhotoTitle() {
         return photoTitle;
     }
 
-    public void setPhotoTitle(String photoTitle) {
+    public void setPhotoTitle(@NotEmpty(message = "Photo title must not be empty") @Size(min = 1, max = 500, message = "Photo title must be between 1 and 100 characters") String photoTitle) {
         this.photoTitle = photoTitle;
     }
 
-    public String getPhotoLocation() {
+    public @NotEmpty(message = "Photo location must not be empty") @Size(min = 1, max = 100, message = "Location must be between 1 and 100 characters") String getPhotoLocation() {
         return photoLocation;
     }
 
-    public void setPhotoLocation(String photoLocation) {
+    public void setPhotoLocation(@NotEmpty(message = "Photo location must not be empty") @Size(min = 1, max = 100, message = "Location must be between 1 and 100 characters") String photoLocation) {
         this.photoLocation = photoLocation;
     }
 
-    public Date getPhotoDate() {
+    public @NotNull(message = "Date must not be null") @PastOrPresent(message = "Date cannot be in the future") Date getPhotoDate() {
         return photoDate;
     }
 
-    public void setPhotoDate(Date photoDate) {
+    public void setPhotoDate(@NotNull(message = "Date must not be null") @PastOrPresent(message = "Date cannot be in the future") Date photoDate) {
         this.photoDate = photoDate;
     }
 

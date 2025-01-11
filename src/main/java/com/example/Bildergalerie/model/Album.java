@@ -30,8 +30,6 @@ public class Album {
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Photo> photos;
 
-    // Getters and Setters
-
     public Long getAlbumId() {
         return albumId;
     }
@@ -40,19 +38,19 @@ public class Album {
         this.albumId = albumId;
     }
 
+    public @NotNull(message = "Album title must not be null") @Size(min = 1, max = 100, message = "Album title must be between 1 and 100 characters") String getAlbumTitle() {
+        return albumTitle;
+    }
+
+    public void setAlbumTitle(@NotNull(message = "Album title must not be null") @Size(min = 1, max = 100, message = "Album title must be between 1 and 100 characters") String albumTitle) {
+        this.albumTitle = albumTitle;
+    }
+
     public List<Photo> getPhotos() {
         return photos;
     }
 
     public void setPhotos(List<Photo> photos) {
         this.photos = photos;
-    }
-
-    public String getAlbumTitle() {
-        return albumTitle;
-    }
-
-    public void setAlbumTitle(String albumTitle) {
-        this.albumTitle = albumTitle;
     }
 }
