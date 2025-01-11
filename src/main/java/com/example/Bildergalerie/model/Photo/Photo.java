@@ -1,5 +1,6 @@
-package com.example.Bildergalerie.model;
+package com.example.Bildergalerie.model.Photo;
 
+import com.example.Bildergalerie.model.Album.Album;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

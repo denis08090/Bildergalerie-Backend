@@ -1,4 +1,4 @@
-package com.example.Bildergalerie.role;
+package com.example.Bildergalerie.model.role;
 
 import com.example.Bildergalerie.Authority.Authority;
 import com.example.Bildergalerie.generic.ExtendedEntity;

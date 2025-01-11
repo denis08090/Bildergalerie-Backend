@@ -1,5 +1,7 @@
 package com.example.Bildergalerie.model;
 
+import com.example.Bildergalerie.model.Album.Album;
+import com.example.Bildergalerie.model.Photo.Photo;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Blob;

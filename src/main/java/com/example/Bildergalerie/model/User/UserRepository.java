@@ -1,10 +1,10 @@
-package com.example.Bildergalerie.model;
+package com.example.Bildergalerie.model.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 /**
- * Repository interface for {@link Photo} entities.
+ * Repository interface for {@link User} entities.
  *
  * This interface extends JpaRepository and provides CRUD operations
  * for managing Photo entities in the database. It also includes a custom
@@ -12,8 +12,8 @@ import java.util.List;
  *
  * @version 1.0
  * @since 2024-07-26
- * @author Denis Roos
+ * @author Luca Iacopetta
  */
-public interface PhotoRepository extends JpaRepository<Photo, Long> {
-    List<Photo> findByAlbumAlbumId(Long albumId);
+public interface UserRepository extends JpaRepository<User, Long> {
+    public List<User> findByUserUserId(Long userId);
 }

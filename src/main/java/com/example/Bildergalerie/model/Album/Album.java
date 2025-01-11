@@ -1,5 +1,6 @@
-package com.example.Bildergalerie.model;
+package com.example.Bildergalerie.model.Album;
 
+import com.example.Bildergalerie.model.Photo.Photo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;

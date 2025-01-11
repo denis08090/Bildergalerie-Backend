@@ -1,4 +1,4 @@
-package com.example.Bildergalerie.role;
+package com.example.Bildergalerie.model.role;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

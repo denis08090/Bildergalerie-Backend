@@ -1,16 +1,15 @@
 package com.example.Bildergalerie.controller;
 
-import com.example.Bildergalerie.model.Album;
-import com.example.Bildergalerie.model.AlbumRepository;
-import com.example.Bildergalerie.model.Photo;
-import com.example.Bildergalerie.model.PhotoRepository;
+import com.example.Bildergalerie.model.Album.Album;
+import com.example.Bildergalerie.model.Album.AlbumRepository;
+import com.example.Bildergalerie.model.Photo.Photo;
+import com.example.Bildergalerie.model.Photo.PhotoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;

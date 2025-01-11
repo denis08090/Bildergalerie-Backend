@@ -1,4 +1,4 @@
-package com.example.Bildergalerie.model;
+package com.example.Bildergalerie.model.Album;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,13 +1,9 @@
-package com.example.Bildergalerie.model;
+package com.example.Bildergalerie.model.User;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.sql.Blob;
-import java.sql.Date;
 
 @Entity
 public class User {

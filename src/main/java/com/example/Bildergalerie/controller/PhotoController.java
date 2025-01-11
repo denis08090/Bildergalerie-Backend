@@ -1,9 +1,9 @@
 package com.example.Bildergalerie.controller;
 
-import com.example.Bildergalerie.model.Album;
-import com.example.Bildergalerie.model.AlbumRepository;
-import com.example.Bildergalerie.model.Photo;
-import com.example.Bildergalerie.model.PhotoRepository;
+import com.example.Bildergalerie.model.Album.Album;
+import com.example.Bildergalerie.model.Album.AlbumRepository;
+import com.example.Bildergalerie.model.Photo.Photo;
+import com.example.Bildergalerie.model.Photo.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,10 +1,8 @@
 package com.example.Bildergalerie.controller;
 
-import com.example.Bildergalerie.model.User;
-import com.example.Bildergalerie.model.UserRepository;
+import com.example.Bildergalerie.model.User.User;
+import com.example.Bildergalerie.model.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;

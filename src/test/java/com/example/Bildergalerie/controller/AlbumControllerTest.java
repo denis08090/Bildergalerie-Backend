@@ -1,7 +1,7 @@
 package com.example.Bildergalerie.controller;
 
-import com.example.Bildergalerie.model.Album;
-import com.example.Bildergalerie.model.AlbumRepository;
+import com.example.Bildergalerie.model.Album.Album;
+import com.example.Bildergalerie.model.Album.AlbumRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

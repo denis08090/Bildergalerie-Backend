@@ -1,4 +1,4 @@
-package com.example.Bildergalerie.role;
+package com.example.Bildergalerie.model.role;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
