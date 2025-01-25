@@ -1,6 +1,7 @@
 package com.example.Bildergalerie.DTO;
 
 import com.example.Bildergalerie.generic.ExtendedDTO;
+import com.example.Bildergalerie.model.role.DTO.RoleDTO;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
