@@ -1,6 +1,6 @@
 package com.example.Bildergalerie.model.role;
 
-import com.example.Bildergalerie.Authority.Authority;
+import com.example.Bildergalerie.authority.Authority;
 import com.example.Bildergalerie.generic.ExtendedEntity;
 
 import javax.persistence.*;

@@ -1,11 +1,12 @@
 package com.example.Bildergalerie.controller;
 
-import com.example.Bildergalerie.model.User.User;
-import com.example.Bildergalerie.model.User.UserRepository;
+import com.example.Bildergalerie.model.user.User;
+import com.example.Bildergalerie.model.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * REST controller for managing users in the application.
@@ -51,7 +52,7 @@ public class UserController {
      * @return The retrieved user
      */
     @GetMapping("/{userId}")
-    public User getUserById(@PathVariable Long userId) {
+    public User getUserById(@PathVariable UUID userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
     }
@@ -65,7 +66,7 @@ public class UserController {
      */
     @PutMapping("/updateUser/{userId}")
     public User updateUser(
-            @PathVariable Long userId,
+            @PathVariable UUID userId,
             @Valid @RequestBody User user) {
 
         User existingUser = userRepository.findById(userId)
@@ -86,7 +87,7 @@ public class UserController {
      * @param userId The ID of the user to delete
      */
     @DeleteMapping("/deleteUser/{userId}")
-    public void deleteUser(@PathVariable Long userId) {
+    public void deleteUser(@PathVariable UUID userId) {
         if (!userRepository.existsById(userId)) {
             throw new RuntimeException("User not found with ID: " + userId);
         }

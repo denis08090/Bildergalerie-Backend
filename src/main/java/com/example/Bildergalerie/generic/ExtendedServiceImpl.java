@@ -1,5 +1,6 @@
 package com.example.Bildergalerie.generic;
 
+import com.example.Bildergalerie.model.user.UserRepository;
 import org.springframework.data.domain.Page;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +8,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 import org.slf4j.Logger;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public abstract class ExtendedServiceImpl<T extends ExtendedEntity> implements ExtendedService<T> {
@@ -15,8 +15,8 @@ public abstract class ExtendedServiceImpl<T extends ExtendedEntity> implements E
     protected final ExtendedRepository<T> repository;
     protected final Logger logger;
 
-    protected ExtendedServiceImpl(ExtendedRepository<T> repository, Logger logger) {
-        this.repository = repository;
+    protected ExtendedServiceImpl(UserRepository repository, Logger logger) {
+        this.repository = (ExtendedRepository<T>) repository;
         this.logger = logger;
     }
 
