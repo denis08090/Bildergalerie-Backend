@@ -1,5 +1,7 @@
 package com.example.Bildergalerie.DTO;
 
+import com.example.Bildergalerie.generic.ExtendedDTO;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
