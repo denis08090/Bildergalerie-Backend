@@ -102,8 +102,11 @@ mvn test
 
 ## Quellen / Hilfestellungen
 das Backend setzt sich aus verschiedenen, von uns vorherigen erstellten Projekten und gesammelten Erfahrungen zusammen.
+
 Die Projekte wurden in folgenden Modulen eingereicht: M294, M295, M183
+
 Als Hilfe für unsere Anpassungen, um die verschiedenen Projekte, oder auch von uns neu erstellten Sachen haben wir ChatGPT verwendet. Ausserdem haben wir ChatGPT als Unterstützung für die Kommentare der einzelnen Funktionen verwendet. Zur Erstellung von ganzen Code-Fragmenten haben wir ChatGPT **nicht** verwendet.
+
 Des weiteren haben wir uns an den in M223 abgegebenen Materialien bedient.
 
 
