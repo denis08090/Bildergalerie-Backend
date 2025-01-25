@@ -27,16 +27,12 @@ public class UserController {
      * Adds a new user.
      *
      * @param user The user object to be added
-     * @return The register user
+     * @return The registered user
      */
     @PostMapping("/register")
     public User addUser(@Valid @RequestBody User user) {
-
-        User newUser = userRepository.save(user);
         return userRepository.save(user);
     }
-
-
 
     /**
      * Retrieves a list of all users.
@@ -57,7 +53,7 @@ public class UserController {
     @GetMapping("/{userId}")
     public User getUserById(@PathVariable Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
     }
 
     /**
@@ -73,11 +69,11 @@ public class UserController {
             @Valid @RequestBody User user) {
 
         User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
 
-        existingUser.setUser_name(user.getUser_name());
-        existingUser.setFirst_name(user.getFirst_name());
-        existingUser.setLast_name(user.getLast_name());
+        existingUser.setUserName(user.getUserName());
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
         existingUser.setEmail(user.getEmail());
         existingUser.setPassword(user.getPassword());
 
@@ -91,6 +87,9 @@ public class UserController {
      */
     @DeleteMapping("/deleteUser/{userId}")
     public void deleteUser(@PathVariable Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new RuntimeException("User not found with ID: " + userId);
+        }
         userRepository.deleteById(userId);
     }
 }

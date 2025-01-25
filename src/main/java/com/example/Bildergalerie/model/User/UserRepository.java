@@ -1,7 +1,8 @@
 package com.example.Bildergalerie.model.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List;
+
+import java.util.Optional;
 
 /**
  * Repository interface for {@link User} entities.
@@ -15,5 +16,7 @@ import java.util.List;
  * @author Luca Iacopetta
  */
 public interface UserRepository extends JpaRepository<User, Long> {
-    public List<User> findByUserUserId(Long userId);
+    public Optional<User> findById(Long userId);
 }
+
+

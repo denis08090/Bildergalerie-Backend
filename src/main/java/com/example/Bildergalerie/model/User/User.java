@@ -1,7 +1,5 @@
 package com.example.Bildergalerie.model.User;
 
-import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -9,31 +7,31 @@ import javax.validation.constraints.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long userId;
+    private Long userId;
 
     @NotEmpty(message = "Username must not be empty")
     @Size(min = 1, max = 50, message = "Username must be between 1 and 50 characters")
-    @UniqueElements(message = "Username is already used")
-    @Column(unique = true)
-    private String user_name;
+    @Column(unique = true, nullable = false)
+    private String userName;
 
     @NotEmpty(message = "Firstname must not be empty")
     @Size(min = 1, max = 50, message = "Firstname must be between 1 and 50 characters")
-    private String first_name;
+    private String firstName;
 
     @NotEmpty(message = "Lastname must not be empty")
-    @Size(min = 1, max = 50, message = "Firstname must be between 1 and 50 characters")
-    private String last_name;
+    @Size(min = 1, max = 50, message = "Lastname must be between 1 and 50 characters")
+    private String lastName;
 
     @NotEmpty(message = "E-Mail must not be empty")
-    @Email
-    @Column(unique = true)
+    @Email(message = "Invalid email format")
+    @Column(unique = true, nullable = false)
     private String email;
 
     @NotEmpty(message = "Password must not be empty")
     @Size(min = 1, max = 50, message = "Password must be between 1 and 50 characters")
     private String password;
 
+    // Getter and Setter methods
     public Long getUserId() {
         return userId;
     }
@@ -42,43 +40,43 @@ public class User {
         this.userId = userId;
     }
 
-    public @NotEmpty(message = "Username must not be empty") @Size(min = 1, max = 50, message = "Username must be between 1 and 50 characters") @UniqueElements(message = "Username is already used") String getUser_name() {
-        return user_name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser_name(@NotEmpty(message = "Username must not be empty") @Size(min = 1, max = 50, message = "Username must be between 1 and 50 characters") @UniqueElements(message = "Username is already used") String user_name) {
-        this.user_name = user_name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public @NotEmpty(message = "Firstname must not be empty") @Size(min = 1, max = 50, message = "Firstname must be between 1 and 50 characters") String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(@NotEmpty(message = "Firstname must not be empty") @Size(min = 1, max = 50, message = "Firstname must be between 1 and 50 characters") String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public @NotEmpty(message = "Lastname must not be empty") @Size(min = 1, max = 50, message = "Firstname must be between 1 and 50 characters") String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(@NotEmpty(message = "Lastname must not be empty") @Size(min = 1, max = 50, message = "Firstname must be between 1 and 50 characters") String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public @NotEmpty(message = "E-Mail must not be empty") @Email @UniqueElements(message = "E-Mail is already used") String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(@NotEmpty(message = "E-Mail must not be empty") @Email @UniqueElements(message = "E-Mail is already used") String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public @NotEmpty(message = "Password must not be empty") @Size(min = 1, max = 50, message = "Password must be between 1 and 50 characters") String getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(@NotEmpty(message = "Password must not be empty") @Size(min = 1, max = 50, message = "Password must be between 1 and 50 characters") String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 }
