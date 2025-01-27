@@ -11,9 +11,6 @@ import java.util.UUID;
 
 @Entity
 public class User extends ExtendedEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID userId;
 
     @NotEmpty(message = "Username must not be empty")
     @Size(min = 1, max = 50, message = "Username must be between 1 and 50 characters")
@@ -45,14 +42,6 @@ public class User extends ExtendedEntity {
     )
     private Set<Role> roles = new HashSet<>();
 
-    // Getter and Setter methods
-    public UUID getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
 
     public String getUserName() {
         return userName;

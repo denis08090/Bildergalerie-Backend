@@ -19,26 +19,24 @@ public class UserServiceImpl extends ExtendedServiceImpl<User> implements UserSe
 
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
   private final RoleService roleService;  // Inject RoleService
-  private final UserRepository userRepository;
+
 
   @Autowired
   public UserServiceImpl(UserRepository repository, Logger logger,
                          BCryptPasswordEncoder bCryptPasswordEncoder,
                          RoleService roleService) {
     super(repository, logger);
-    this.userRepository = repository;
     this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     this.roleService = roleService;
-  }
 
+  }
 
   @Override
-  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    return userRepository.findByEmail(email)
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException { //nimmt username
+    return ((UserRepository) repository).findByEmail(email)
             .map(UserDetailsImpl::new)
-            .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+            .orElseThrow(() -> new UsernameNotFoundException(email));
   }
-
 
   @Override
   public User register(User user) {
@@ -51,14 +49,12 @@ public class UserServiceImpl extends ExtendedServiceImpl<User> implements UserSe
 
     user.setRoles(Collections.singleton(clientRole)); // Assign the 'CLIENT' role to the user
 
-    // In UserServiceImpl during user registration
-
     // Save the user with the assigned role
     return save(user);
   }
 
   public User findByEmail(String email) {
-    return userRepository.findByEmail(email)
+    return ((UserRepository) repository).findByEmail(email)
             .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
   }
 

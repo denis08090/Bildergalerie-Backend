@@ -1,4 +1,4 @@
-package com.example.Bildergalerie.DTO;
+package com.example.Bildergalerie.model.user.dto;
 
 import com.example.Bildergalerie.generic.ExtendedDTO;
 

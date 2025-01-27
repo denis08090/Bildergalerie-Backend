@@ -1,5 +1,6 @@
 package com.example.Bildergalerie.model.user;
 
+import com.example.Bildergalerie.generic.ExtendedRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
@@ -16,7 +17,7 @@ import java.util.UUID;
  * @since 2024-07-26
  * @author Luca Iacopetta
  */
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface UserRepository extends ExtendedRepository<User> {
     public Optional<User> findById(UUID userId);
     Optional<User> findByEmail(String email);
 

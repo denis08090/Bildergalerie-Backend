@@ -9,14 +9,15 @@ import java.util.Optional;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.NoRepositoryBean;
 
 public abstract class ExtendedServiceImpl<T extends ExtendedEntity> implements ExtendedService<T> {
 
     protected final ExtendedRepository<T> repository;
     protected final Logger logger;
 
-    protected ExtendedServiceImpl(UserRepository repository, Logger logger) {
-        this.repository = (ExtendedRepository<T>) repository;
+    protected ExtendedServiceImpl(ExtendedRepository<T> repository, Logger logger) {
+        this.repository = repository;
         this.logger = logger;
     }
 
@@ -76,4 +77,3 @@ public abstract class ExtendedServiceImpl<T extends ExtendedEntity> implements E
     }
 
 }
-

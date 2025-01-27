@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -44,9 +45,9 @@ public class WebSecurityConfig {
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     return http
             .authorizeHttpRequests(requests -> requests
-                    .requestMatchers(HttpMethod.POST, "/users/login").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/products").hasAuthority("CAN_RETRIEVE_PRODUCT") // Allow access to /products for users with the CAN_RETRIEVE_PRODUCTS authority
+                    .antMatchers(HttpMethod.POST, "/users/login").permitAll()
+                    .antMatchers(HttpMethod.POST, "/users/register").permitAll()
+                    //.requestMatchers(HttpMethod.GET, "/products").hasAuthority("CAN_RETRIEVE_PRODUCT") // Allow access to /products for users with the CAN_RETRIEVE_PRODUCTS authority
                     .anyRequest().authenticated())
             .addFilterAfter(
                     new CustomAuthenticationFilter(new AntPathRequestMatcher("/users/login", "POST"),
@@ -58,6 +59,8 @@ public class WebSecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .build();
   }
+
+
 
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {

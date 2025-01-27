@@ -40,6 +40,8 @@ public class UserController {
      *
      * @return A list of users
      */
+
+
     @GetMapping("/all")
     public List<User> getAllUsers() {
         return userRepository.findAll();
