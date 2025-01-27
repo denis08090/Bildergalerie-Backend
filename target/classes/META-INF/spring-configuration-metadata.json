@@ -1,0 +1,27 @@
+{
+  "groups": [
+    {
+      "name": "jwt",
+      "type": "com.example.Bildergalerie.security.helpers.JwtProperties",
+      "sourceType": "com.example.Bildergalerie.security.helpers.JwtProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "jwt.expiration-millis",
+      "type": "java.lang.Long",
+      "sourceType": "com.example.Bildergalerie.security.helpers.JwtProperties"
+    },
+    {
+      "name": "jwt.issuer",
+      "type": "java.lang.String",
+      "sourceType": "com.example.Bildergalerie.security.helpers.JwtProperties"
+    },
+    {
+      "name": "jwt.secret",
+      "type": "java.lang.String",
+      "sourceType": "com.example.Bildergalerie.security.helpers.JwtProperties"
+    }
+  ],
+  "hints": []
+}
