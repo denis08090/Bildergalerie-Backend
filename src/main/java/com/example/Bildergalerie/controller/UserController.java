@@ -1,98 +1,80 @@
-package com.example.Bildergalerie.controller;
+package com.example.jwt.domain.user;
 
 import com.example.Bildergalerie.model.user.User;
-import com.example.Bildergalerie.model.user.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import javax.validation.Valid;
+import com.example.Bildergalerie.model.user.UserService;
+import com.example.Bildergalerie.model.user.dto.UserDTO;
+import com.example.Bildergalerie.model.user.dto.UserMapper;
+import com.example.Bildergalerie.model.user.dto.UserRegisterDTO;
+import jakarta.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-/**
- * REST controller for managing users in the application.
- *
- * This controller provides endpoints for adding, retrieving, updating,
- * and deleting users.
- *
- * @version 1.0
- * @since 2024-07-26
- */
+@Validated
 @RestController
 @RequestMapping("/users")
+@Slf4j
 public class UserController {
 
+    private final UserService userService;
+    private final UserMapper userMapper;
+
     @Autowired
-    private UserRepository userRepository;
+    public UserController(UserService userService, UserMapper userMapper) {
+        this.userService = userService;
+        this.userMapper = userMapper;
+    }
 
-    /**
-     * Adds a new user.
-     *
-     * @param user The user object to be added
-     * @return The registered user
-     */
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> retrieveById(@PathVariable UUID id) {
+        User user = userService.findById(id);
+        return new ResponseEntity<>(userMapper.toDTO(user), HttpStatus.OK);
+    }
+
+    @GetMapping({"", "/"})
+    public ResponseEntity<List<UserDTO>> retrieveAll() {
+        List<User> users = userService.findAll();
+        return new ResponseEntity<>(userMapper.toDTOs(users), HttpStatus.OK);
+    }
+
     @PostMapping("/register")
-    public User addUser(@Valid @RequestBody User user) {
-        return userRepository.save(user);
+    public ResponseEntity<UserDTO> register(@Valid @RequestBody UserRegisterDTO userRegisterDTO) {
+        log.info("User with E-Mail {} tried to register at {}", userRegisterDTO.getEmail(), LocalDateTime.now());
+        User user = userService.register(userMapper.fromUserRegisterDTO(userRegisterDTO));
+        return new ResponseEntity<>(userMapper.toDTO(user), HttpStatus.CREATED);
     }
 
-    /**
-     * Retrieves a list of all users.
-     *
-     * @return A list of users
-     */
-
-
-    @GetMapping("/all")
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('USER_MODIFY')")
+    public ResponseEntity<UserDTO> updateById(@PathVariable UUID id,
+                                              @Valid @RequestBody UserDTO userDTO) {
+        User user = userService.updateById(id, userMapper.fromDTO(userDTO));
+        return new ResponseEntity<>(userMapper.toDTO(user), HttpStatus.OK);
     }
 
-    /**
-     * Retrieves a user by their ID.
-     *
-     * @param userId The ID of the user to retrieve
-     * @return The retrieved user
-     */
-    @GetMapping("/{userId}")
-    public User getUserById(@PathVariable UUID userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
-    }
 
-    /**
-     * Updates an existing user.
-     *
-     * @param userId The ID of the user to update
-     * @param user The updated user object
-     * @return The updated user
-     */
-    @PutMapping("/updateUser/{userId}")
-    public User updateUser(
-            @PathVariable UUID userId,
-            @Valid @RequestBody User user) {
-
-        User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
-
-        existingUser.setUserName(user.getUserName());
-        existingUser.setFirstName(user.getFirstName());
-        existingUser.setLastName(user.getLastName());
-        existingUser.setEmail(user.getEmail());
-        existingUser.setPassword(user.getPassword());
-
-        return userRepository.save(existingUser);
-    }
-
-    /**
-     * Deletes a user.
-     *
-     * @param userId The ID of the user to delete
-     */
-    @DeleteMapping("/deleteUser/{userId}")
-    public void deleteUser(@PathVariable UUID userId) {
-        if (!userRepository.existsById(userId)) {
-            throw new RuntimeException("User not found with ID: " + userId);
-        }
-        userRepository.deleteById(userId);
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('USER_DELETE')")
+    public ResponseEntity<Void> deleteById(@PathVariable UUID id) {
+        userService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
