@@ -21,6 +21,13 @@ Unsere Bildergalerie ist eine Spring-Boot Applikation, welche für die Verwaltun
 
 ## Architektur
 
+### Datenbank ERM
+
+![ERM](https://github.com/user-attachments/assets/6057d2e2-9abd-49f3-ad1d-e9db4c4581d4)
+
+### Klassendiagramm
+
+![BildergalerieKlassendiagram](https://github.com/user-attachments/assets/91ed6337-24a9-49ad-b7ea-a904bea47d91)
 
 ## Installationsanleitung
 
