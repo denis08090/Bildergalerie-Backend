@@ -129,7 +129,7 @@ mvn spring-boot run
 
 ### Benutzerverwaltung
 - **POST /users/register** - Fügt einen neuen Benutzer hinzu
-- **GET /users/all** - Ruft eine Liste aller Benutzer ab
+- **GET /users/** - Ruft eine Liste aller Benutzer ab
 - **GET /users/{userId}** - Ruft einen Benutzer anhand seiner ID ab
 - **PUT /users/updateUser/{userId}** - Aktualisiert die Daten eines bestehenden Benutzers
 - **DELETE /users/deleteUser/{userId}** - Löscht einen Benutzer anhand seiner ID
