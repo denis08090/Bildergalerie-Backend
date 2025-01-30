@@ -88,7 +88,7 @@ git clone https://github.com/denis08090/Bildergalerie-Backend
 ```
 
 ```powershell
-https://github.com/denis08090/Bildergalerie-Frontend
+git clone https://github.com/denis08090/Bildergalerie-Frontend
 ```
 
 ### DB Konfiguration
