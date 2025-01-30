@@ -81,10 +81,14 @@ Dieses Modell ermöglicht eine flexible Verwaltung von Nutzern, Alben und Fotos,
 
 ## Installationsanleitung
 
-### Repository Klonen
+### Repositories Klonen
 
 ```powershell
 git clone https://github.com/denis08090/Bildergalerie-Backend
+```
+
+```powershell
+https://github.com/denis08090/Bildergalerie-Frontend
 ```
 
 ### DB Konfiguration
