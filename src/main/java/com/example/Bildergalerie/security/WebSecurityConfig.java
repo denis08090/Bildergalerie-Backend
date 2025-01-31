@@ -47,8 +47,7 @@ public class WebSecurityConfig {
             .authorizeHttpRequests(requests -> requests
                     .antMatchers(HttpMethod.POST, "/users/login").permitAll()
                     .antMatchers(HttpMethod.POST, "/users/register").permitAll()
-                    //.requestMatchers(HttpMethod.GET, "/products").hasAuthority("CAN_RETRIEVE_PRODUCT") // Allow access to /products for users with the CAN_RETRIEVE_PRODUCTS authority
-                    .anyRequest().authenticated())
+                    .antMatchers("/albums/**").authenticated()                    .anyRequest().authenticated())
             .addFilterAfter(
                     new CustomAuthenticationFilter(new AntPathRequestMatcher("/users/login", "POST"),
                             authenticationManager(), jwtProperties), UsernamePasswordAuthenticationFilter.class)

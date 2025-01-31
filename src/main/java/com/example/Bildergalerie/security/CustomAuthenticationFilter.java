@@ -37,16 +37,23 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
 
   private String generateToken(Authentication authResult) {
     UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authResult.getPrincipal();
-    byte[] keyBytes = Decoders.BASE64.decode(jwtProperties.getSecret());
+
+    // Debugging hinzufügen
+    String secret = jwtProperties.getSecret();
+    if (secret == null || secret.isBlank()) {
+      throw new IllegalArgumentException("JWT Secret Key is null or empty!");
+    }
+
+    byte[] keyBytes = Decoders.BASE64.decode(secret);
 
     return Jwts.builder()
-        .setClaims(Map.of("sub", userDetailsImpl.user().getId().toString(), "authorities",
-            userDetailsImpl.getAuthorities()))
-        .setIssuedAt(new Date())
-        .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getExpirationMillis()))
-        .setIssuer(jwtProperties.getIssuer())
-        .signWith(Keys.hmacShaKeyFor(keyBytes))
-        .compact();
+            .setClaims(Map.of("sub", userDetailsImpl.user().getId().toString(), "authorities",
+                    userDetailsImpl.getAuthorities()))
+            .setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getExpirationMillis()))
+            .setIssuer(jwtProperties.getIssuer())
+            .signWith(Keys.hmacShaKeyFor(keyBytes))
+            .compact();
   }
 
   @Override

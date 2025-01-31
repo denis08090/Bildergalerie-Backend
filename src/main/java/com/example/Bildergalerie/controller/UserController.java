@@ -1,4 +1,4 @@
-package com.example.jwt.domain.user;
+package com.example.Bildergalerie.controller;
 
 import com.example.Bildergalerie.model.user.User;
 import com.example.Bildergalerie.model.user.UserService;
@@ -6,17 +6,13 @@ import com.example.Bildergalerie.model.user.dto.UserDTO;
 import com.example.Bildergalerie.model.user.dto.UserMapper;
 import com.example.Bildergalerie.model.user.dto.UserRegisterDTO;
 import jakarta.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,10 +53,11 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<UserDTO> register(@Valid @RequestBody UserRegisterDTO userRegisterDTO) {
-        log.info("User with E-Mail {} tried to register at {}", userRegisterDTO.getEmail(), LocalDateTime.now());
+        log.info("User mit E-Mail {} versucht sich zu registrieren", userRegisterDTO.getEmail());
         User user = userService.register(userMapper.fromUserRegisterDTO(userRegisterDTO));
         return new ResponseEntity<>(userMapper.toDTO(user), HttpStatus.CREATED);
     }
+
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('USER_MODIFY')")

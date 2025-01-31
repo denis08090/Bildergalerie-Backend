@@ -9,6 +9,7 @@ import org.mapstruct.ReportingPolicy;
 public interface UserMapper extends ExtendedMapper<User, UserDTO> {
 
   // For UserRegisterDTO mapping
+  @Mapping(source = "userName", target = "userName")  // WICHTIG! ✅
   User fromUserRegisterDTO(UserRegisterDTO dto);
 
 }

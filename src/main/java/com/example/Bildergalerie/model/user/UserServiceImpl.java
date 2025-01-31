@@ -40,22 +40,26 @@ public class UserServiceImpl extends ExtendedServiceImpl<User> implements UserSe
 
   @Override
   public User register(User user) {
+    if (user == null) {
+      throw new IllegalStateException("User object is null before saving!");
+    }
+
+    // Falls das Passwort null oder leer ist
+    if (user.getPassword() == null || user.getPassword().isEmpty()) {
+      throw new IllegalArgumentException("Password must not be null or empty");
+    }
 
     user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-    // Fetch the 'CLIENT' role from  and assign it to the user
-    Role clientRole = roleService.findByName("CLIENT");
-    // Fetch the silver rank from Rank and assign it to the user
 
+    // Fetch the 'CLIENT' role from RoleService and assign it to the user
+    Role clientRole = roleService.findByName("CLIENT");
+
+    if (clientRole == null) {
+      throw new IllegalStateException("Role CLIENT not found!");
+    }
 
     user.setRoles(Collections.singleton(clientRole)); // Assign the 'CLIENT' role to the user
 
-    // Save the user with the assigned role
     return save(user);
   }
-
-  public User findByEmail(String email) {
-    return ((UserRepository) repository).findByEmail(email)
-            .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-  }
-
 }

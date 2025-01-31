@@ -13,8 +13,10 @@ public abstract class ExtendedEntity {
 
     @Id
     @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")    @Column(name = "id", updatable = false, nullable = false)
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "BINARY(16)")
     private UUID id;
+
 
     protected ExtendedEntity() {
     }

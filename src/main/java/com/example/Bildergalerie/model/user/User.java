@@ -2,6 +2,9 @@ package com.example.Bildergalerie.model.user;
 
 import com.example.Bildergalerie.generic.ExtendedEntity;
 import com.example.Bildergalerie.model.role.Role;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -31,7 +34,7 @@ public class User extends ExtendedEntity {
     private String email;
 
     @NotEmpty(message = "Password must not be empty")
-    @Size(min = 1, max = 50, message = "Password must be between 1 and 50 characters")
+    @Size(min = 1, max =100, message = "Password must be between 1 and 50 characters")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)

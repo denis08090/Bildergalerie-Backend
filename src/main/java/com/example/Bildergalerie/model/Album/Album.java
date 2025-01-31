@@ -7,6 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.UUID;
+
 /**
  * Represents a photo album.
  *
@@ -33,7 +35,7 @@ public class Album {
 
     //@ManyToOne(optional = false) // Ein Album muss immer einem User zugeordnet sein
     @JoinColumn(name = "user_id", nullable = false) // Name der Fremdschlüsselspalte in der Datenbank
-    private Long userId;
+    private UUID userId;
 
     public Long getAlbumId() {
         return albumId;
@@ -59,11 +61,11 @@ public class Album {
         this.photos = photos;
     }
 
-    public Long getUserId(Long userId) {
+    public UUID getUserId(UUID userId) {
         return this.userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(UUID userId) {
         this.userId = userId;
     }
 }
