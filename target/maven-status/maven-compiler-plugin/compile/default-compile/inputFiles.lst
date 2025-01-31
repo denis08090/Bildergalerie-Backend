@@ -1,5 +1,4 @@
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\model\user\UserRepository.java
-C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\helpers\AuthorizationSchemas.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\model\role\RoleService.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\controller\PhotoController.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\audit\UserAware.java
@@ -7,6 +6,7 @@ C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergal
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\model\Album\Album.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\model\Photo\PhotoRepository.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\model\user\UserServiceImpl.java
+C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\model\user\dto\UserRegisterDTO.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\generic\ExtendedDTO.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\controller\UserController.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\security\config\Encoders.java
@@ -25,19 +25,19 @@ C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergal
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\generic\ExtendedService.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\security\helpers\Credentials.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\security\WebSecurityConfig.java
-C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\helpers\JwtProperties.java
+C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\model\user\dto\UserMapper.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\controller\AlbumController.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\generic\ExtendedEntity.java
-C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\DTO\UserDTO.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\authority\authorityDTO\AuthorityMapper.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\model\user\User.java
+C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\model\user\dto\UserDTO.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\security\CustomAuthenticationFilter.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\generic\ExtendedAuditEntity.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\security\config\VaultConfig.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\model\role\RoleRepository.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\generic\ExtendedServiceImpl.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\security\helpers\JwtProperties.java
-C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\helpers\Credentials.java
+C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\model\role\DTO\RoleMapper.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\authority\Authority.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\model\Photo\Photo.java
 C:\Users\denis\Desktop\Bildergalerie-Backend\src\main\java\com\example\Bildergalerie\model\user\UserDetailsImpl.java
