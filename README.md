@@ -74,6 +74,17 @@ Dieses Modell ermöglicht eine flexible Verwaltung von Nutzern, Alben und Fotos,
 - **CustomAuthenticationFilter:** Implementiert einen benutzerdefinierten Authentifizierungsfilter.
 - **UserDetailsImpl:** Anpassung der Benutzeridentifikation innerhalb von Spring Security.
 
+- **Authoritäten**:
+- CAN_WATCH_ALBUM
+- CAN_CREATE_ALBUM
+- CAN_ADD_PHOTO
+- CAN_WATCH_ALL_ALBUMS
+
+##### Rollen
+- Client: CAN_WATCH_ALBUM, CAN_CREATE_ALBUM, CAN_ADD_PHOTO,
+- Administrator: CAN_WATCH_ALBUM, CAN_CREATE_ALBUM, CAN_ADD_PHOTO, CAN_WATCH_ALL_ALBUMS
+            
+
 #### Sonstige Klassen
 
 - **Encoders:** Verwaltet Passwörter mit einem BCryptPasswordEncoder.
