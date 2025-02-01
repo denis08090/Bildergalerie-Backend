@@ -40,18 +40,6 @@ public class UserRegisterDTO extends ExtendedDTO {
   private String lastName;
 
   /**
-   * **Benutzername (muss eindeutig sein).**
-   *
-   * - Darf nicht leer sein (`@NotEmpty`).
-   * - Muss zwischen 1 und 50 Zeichen lang sein (`@Size`).
-   * - Ist in der Datenbank **eindeutig** (`@Column(unique = true, nullable = false)`).
-   */
-  @NotEmpty(message = "Username must not be empty")
-  @Size(min = 1, max = 50, message = "Username must be between 1 and 50 characters")
-  @Column(unique = true, nullable = false)
-  private String userName;
-
-  /**
    * **E-Mail-Adresse des Benutzers.**
    *
    * - Muss eine gültige E-Mail-Adresse sein (`@Email`).
@@ -100,17 +88,14 @@ public class UserRegisterDTO extends ExtendedDTO {
    * @param lastName  Der Nachname.
    * @param email     Die E-Mail-Adresse.
    * @param password  Das Passwort.
-   * @param age       Das Alter.
-   * @param userName  Der Benutzername.
    */
-  public UserRegisterDTO(UUID id, String firstName, String lastName, String email, String password, Integer age, String userName) {
+  public UserRegisterDTO(UUID id, String firstName, String lastName, String email, String password, Integer age) {
     super(id);
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.password = password;
     this.age = age;
-    this.userName = userName;
   }
 
   // **Getter und Setter mit Fluent API**
@@ -160,12 +145,4 @@ public class UserRegisterDTO extends ExtendedDTO {
     return this;
   }
 
-  public String getUserName() {
-    return userName;
-  }
-
-  public UserRegisterDTO setUserName(String userName) {
-    this.userName = userName;
-    return this;
-  }
 }

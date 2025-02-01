@@ -32,18 +32,6 @@ import java.util.Set;
 public class User extends ExtendedEntity {
 
     /**
-     * **Benutzername (muss eindeutig sein).**
-     *
-     * - Darf nicht leer sein (`@NotEmpty`).
-     * - Muss zwischen 1 und 50 Zeichen lang sein (`@Size`).
-     * - Ist **eindeutig** in der Datenbank (`@Column(unique = true, nullable = false)`).
-     */
-    @NotEmpty(message = "Username must not be empty")
-    @Size(min = 1, max = 50, message = "Username must be between 1 and 50 characters")
-    @Column(unique = true, nullable = false)
-    private String userName;
-
-    /**
      * **Vorname des Benutzers.**
      *
      * - Darf nicht leer sein (`@NotEmpty`).
@@ -100,25 +88,6 @@ public class User extends ExtendedEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     ) Set<Role> roles = new HashSet<>();
 
-    // **Getter und Setter**
-
-    /**
-     * Gibt den Benutzernamen zurück.
-     *
-     * @return Der Benutzername.
-     */
-    public String getUserName() {
-        return userName;
-    }
-
-    /**
-     * Setzt den Benutzernamen.
-     *
-     * @param userName Der neue Benutzername.
-     */
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     /**
      * Gibt den Vornamen des Benutzers zurück.

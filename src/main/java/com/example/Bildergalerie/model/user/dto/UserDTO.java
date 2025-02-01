@@ -25,16 +25,6 @@ import java.util.UUID;
 public class UserDTO extends ExtendedDTO {
 
     /**
-     * **Benutzername.**
-     *
-     * - Muss zwischen 1 und 50 Zeichen lang sein.
-     * - Darf nicht leer sein.
-     */
-    @NotEmpty(message = "Username must not be empty")
-    @Size(min = 1, max = 50, message = "Username must be between 1 and 50 characters")
-    private String userName;
-
-    /**
      * **Vorname des Benutzers.**
      *
      * - Muss zwischen 1 und 50 Zeichen lang sein.
@@ -85,43 +75,20 @@ public class UserDTO extends ExtendedDTO {
     /**
      * **Konstruktor zur Initialisierung eines `UserDTO`-Objekts.**
      *
-     * @param id        Die UUID des Benutzers.
-     * @param userName  Der Benutzername.
+     * @param id        Die UUID des Benutzers
      * @param firstName Der Vorname des Benutzers.
      * @param lastName  Der Nachname des Benutzers.
      * @param email     Die E-Mail-Adresse des Benutzers.
      * @param password  Das Passwort des Benutzers.
      */
-    public UserDTO(UUID id, String userName, String firstName, String lastName, String email, String password) {
+    public UserDTO(UUID id, String firstName, String lastName, String email, String password) {
         super(id); // Setzt die ID aus `ExtendedDTO`
-        this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
     }
 
-    // **Getter und Setter mit fluent API für Methodenverkettung**
-
-    /**
-     * Gibt den Benutzernamen zurück.
-     *
-     * @return Der Benutzername.
-     */
-    public String getUserName() {
-        return userName;
-    }
-
-    /**
-     * Setzt den Benutzernamen.
-     *
-     * @param userName Der neue Benutzername.
-     * @return Die aktuelle `UserDTO`-Instanz (Methodenverkettung).
-     */
-    public UserDTO setUserName(String userName) {
-        this.userName = userName;
-        return this;
-    }
 
     /**
      * Gibt den Vornamen des Benutzers zurück.

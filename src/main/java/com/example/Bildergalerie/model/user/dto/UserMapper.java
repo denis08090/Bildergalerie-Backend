@@ -3,7 +3,6 @@ package com.example.Bildergalerie.model.user.dto;
 import com.example.Bildergalerie.generic.ExtendedMapper;
 import com.example.Bildergalerie.model.user.User;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 /**
@@ -28,18 +27,8 @@ public interface UserMapper extends ExtendedMapper<User, UserDTO> {
    * - Diese Methode wird benötigt, wenn ein neuer Benutzer registriert wird.
    * - MapStruct erstellt die Implementierung automatisch zur Laufzeit.
    *
-   * **Beispiel für `UserRegisterDTO`:**
-   * ```json
-   * {
-   *   "userName": "john_doe",
-   *   "email": "john@example.com",
-   *   "password": "secure123"
-   * }
-   * ```
-   *
    * @param dto Das DTO für die Benutzerregistrierung.
    * @return Die konvertierte `User`-Entität.
    */
-  @Mapping(source = "userName", target = "userName")  // WICHTIG! ✅
   User fromUserRegisterDTO(UserRegisterDTO dto);
 }

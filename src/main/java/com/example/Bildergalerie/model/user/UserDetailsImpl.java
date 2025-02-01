@@ -8,15 +8,11 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 /**
- * **Implementierung von `UserDetails` für die Spring Security Authentifizierung.**
+ * **Implementierung von `UserDetails` für Spring Security**
  *
- * Diese Klasse stellt sicher, dass die `User`-Entität mit Spring Security kompatibel ist.
- * Sie wird von Spring Security verwendet, um Benutzerinformationen während der Authentifizierung zu verarbeiten.
- *
- * **Wichtige Eigenschaften:**
- * - **`UserDetailsImpl` ist ein `record`**: `record`-Klassen sind unveränderlich und enthalten standardmäßig `equals()`, `hashCode()` und `toString()`.
- * - **Spring Security Schnittstelle `UserDetails`**: Wird benötigt, um einen Benutzer in Spring Security zu authentifizieren.
- * - **Konvertierung von `Role` und `Authority` in `GrantedAuthority`**.
+ * - Diese Klasse dient als Adapter zwischen `User`-Entitäten und Spring Securitys `UserDetails`.
+ * - Sie wandelt Rollen (`Role`) in Berechtigungen (`GrantedAuthority`) um.
+ * - Die Klasse wird als `record` implementiert, da sie nur Daten enthält und keine Zustandsänderungen benötigt.
  *
  * @version 1.0
  * @since 2024-07-26
@@ -24,42 +20,51 @@ import java.util.stream.Collectors;
 public record UserDetailsImpl(User user) implements UserDetails {
 
   /**
-   * **Gibt die Rollen und Berechtigungen (`Authorities`) des Benutzers zurück.**
+   * **Gibt die Berechtigungen (Authorities) des Benutzers zurück.**
    *
-   * - Jede **Rolle (`Role`)** enthält eine Liste von **Berechtigungen (`Authority`)**.
-   * - Spring Security benötigt eine Liste von `GrantedAuthority`, daher wird jede `Authority` in `SimpleGrantedAuthority` umgewandelt.
+   * - Jeder Benutzer hat eine oder mehrere Rollen (`Role`).
+   * - Jede Rolle kann eine oder mehrere Berechtigungen (`Authority`) besitzen.
+   * - Diese Methode konvertiert Rollen in `GrantedAuthority`, das Spring Security benötigt.
    *
-   * @return Eine `Collection` von `GrantedAuthority`-Objekten für Spring Security.
+   * @return Eine `Collection` von `GrantedAuthority`-Objekten für den Benutzer.
    * @throws IllegalStateException Falls der Benutzer keine Rollen oder eine Rolle keine Berechtigungen hat.
    */
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     if (user.getRoles() == null) {
-      throw new IllegalStateException("User has no roles assigned!");
+      throw new IllegalStateException("❌ Fehler: Der Benutzer hat keine Rollen zugewiesen!");
     }
     return user.getRoles().stream()
-            .flatMap(r -> {
-              if (r.getAuthorities() == null) {
-                throw new IllegalStateException("Role has no authorities!");
+            .flatMap(role -> {
+              if (role.getAuthorities() == null) {
+                throw new IllegalStateException("❌ Fehler: Die Rolle '" + role.getName() + "' hat keine Berechtigungen!");
               }
-              return r.getAuthorities().stream();
+              return role.getAuthorities().stream();
             })
-            .map(a -> new SimpleGrantedAuthority(a.getName()))
+            .map(authority -> new SimpleGrantedAuthority(authority.getName()))
             .collect(Collectors.toList());
   }
 
+  /**
+   * **Gibt das verschlüsselte Passwort des Benutzers zurück.**
+   *
+   * - Spring Security verwendet diese Methode, um das gespeicherte Passwort zu vergleichen.
+   *
+   * @return Das verschlüsselte Passwort.
+   * @throws IllegalStateException Falls das Passwort `null` ist.
+   */
   @Override
   public String getPassword() {
     if (user.getPassword() == null) {
-      throw new IllegalStateException("User password is null!");
+      throw new IllegalStateException("❌ Fehler: Das Passwort des Benutzers ist null!");
     }
     return user.getPassword();
   }
 
   /**
-   * **Gibt den Benutzernamen zurück, der für die Authentifizierung verwendet wird.**
+   * **Gibt den Benutzernamen (E-Mail) zurück.**
    *
-   * - In diesem Fall wird die **E-Mail-Adresse** als Benutzername verwendet.
+   * - In dieser Implementierung dient die E-Mail als eindeutige Benutzerkennung.
    *
    * @return Die E-Mail-Adresse des Benutzers.
    * @throws IllegalStateException Falls die E-Mail `null` ist.
@@ -67,18 +72,18 @@ public record UserDetailsImpl(User user) implements UserDetails {
   @Override
   public String getUsername() {
     if (user.getEmail() == null) {
-      throw new IllegalStateException("User email is null!");
+      throw new IllegalStateException("❌ Fehler: Die E-Mail des Benutzers ist null!");
     }
     return user.getEmail();
   }
 
   /**
-   * **Gibt zurück, ob das Konto nicht abgelaufen ist.**
+   * **Bestimmt, ob das Benutzerkonto abgelaufen ist.**
    *
-   * - `true` bedeutet, dass das Konto **nicht abgelaufen** ist.
-   * - Falls du eine Ablauf-Logik benötigst, kann hier eine Bedingung implementiert werden.
+   * - Falls `false`, kann sich der Benutzer nicht anmelden.
+   * - Standardmäßig ist diese Methode auf `true`, um alle Konten als nicht abgelaufen zu betrachten.
    *
-   * @return `true`, da Benutzerkonten nicht ablaufen.
+   * @return `true`, da Konten standardmäßig nicht ablaufen.
    */
   @Override
   public boolean isAccountNonExpired() {
@@ -86,12 +91,12 @@ public record UserDetailsImpl(User user) implements UserDetails {
   }
 
   /**
-   * **Gibt zurück, ob das Konto nicht gesperrt ist.**
+   * **Bestimmt, ob das Benutzerkonto gesperrt ist.**
    *
-   * - `true` bedeutet, dass das Konto **nicht gesperrt** ist.
-   * - Falls du eine Sperrmechanik implementierst, sollte dies hier überprüft werden.
+   * - Falls `false`, kann sich der Benutzer nicht anmelden.
+   * - Standardmäßig ist diese Methode auf `true`, da keine Sperrlogik implementiert wurde.
    *
-   * @return `true`, da Benutzer standardmäßig nicht gesperrt sind.
+   * @return `true`, da Konten standardmäßig nicht gesperrt sind.
    */
   @Override
   public boolean isAccountNonLocked() {
@@ -99,10 +104,10 @@ public record UserDetailsImpl(User user) implements UserDetails {
   }
 
   /**
-   * **Gibt zurück, ob die Anmeldeinformationen nicht abgelaufen sind.**
+   * **Bestimmt, ob die Anmeldeinformationen (Passwort) abgelaufen sind.**
    *
-   * - `true` bedeutet, dass die Anmeldeinformationen **nicht abgelaufen** sind.
-   * - Falls du eine Passwortablauf-Logik implementierst, kann das hier überprüft werden.
+   * - Falls `false`, kann sich der Benutzer nicht anmelden.
+   * - Standardmäßig ist diese Methode auf `true`, da keine Ablauf-Logik implementiert wurde.
    *
    * @return `true`, da Passwörter standardmäßig nicht ablaufen.
    */
@@ -112,10 +117,10 @@ public record UserDetailsImpl(User user) implements UserDetails {
   }
 
   /**
-   * **Gibt zurück, ob das Konto aktiviert ist.**
+   * **Bestimmt, ob das Benutzerkonto aktiviert ist.**
    *
-   * - `true` bedeutet, dass das Konto **aktiv** ist.
-   * - Falls du eine Aktivierungslogik (z. B. E-Mail-Verifizierung) hast, sollte das hier überprüft werden.
+   * - Falls `false`, kann sich der Benutzer nicht anmelden.
+   * - Standardmäßig ist diese Methode auf `true`, d.h. alle Benutzer sind aktiviert.
    *
    * @return `true`, da Benutzer standardmäßig aktiviert sind.
    */

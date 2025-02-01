@@ -39,6 +39,7 @@ public interface UserRepository extends ExtendedRepository<User> {
      */
     Optional<User> findById(UUID userId);
 
+    boolean existsByEmail(String email);
     /**
      * **Findet einen Benutzer anhand seiner E-Mail-Adresse.**
      *
