@@ -1,7 +1,3 @@
--- Datenbank erstellen (falls sie nicht existiert)
-CREATE DATABASE IF NOT EXISTS bildergalerie CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE bildergalerie;
-
 -- authority Einträge einfügen, falls sie noch nicht existieren
 INSERT IGNORE INTO `authority` (`id`, `name`)
 VALUES
