@@ -116,7 +116,7 @@ public class Album {
         this.photos = photos;
     }
 
-    public UUID getUserId(UUID userId) {
+    public UUID getUserId() {
         return this.userId;
     }
 

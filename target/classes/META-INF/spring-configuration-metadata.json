@@ -10,8 +10,7 @@
     {
       "name": "jwt.expiration-millis",
       "type": "java.lang.Long",
-      "sourceType": "com.example.Bildergalerie.security.helpers.JwtProperties",
-      "defaultValue": 0
+      "sourceType": "com.example.Bildergalerie.security.helpers.JwtProperties"
     },
     {
       "name": "jwt.issuer",
