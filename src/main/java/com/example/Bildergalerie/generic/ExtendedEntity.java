@@ -2,61 +2,53 @@ package com.example.Bildergalerie.generic;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.util.UUID;
 
 /**
- * **Abstrakte Basisklasse für Entitäten mit einer UUID als Primärschlüssel.**
+ * **Abstrakte Basisklasse für Entitäten mit einer UUID als Primärschlüssel (BINARY(16)).**
  *
- * Diese Klasse bietet eine standardisierte ID-Funktionalität für alle Entitäten,
- * indem sie `UUID` als Primärschlüssel verwendet.
+ * Diese Klasse dient als Grundlage für alle Entitäten, die eine UUID als Primärschlüssel haben.
+ * Dabei wird die UUID als `BINARY(16)` gespeichert, um Speicherplatz zu sparen und die Performance zu verbessern.
  *
- * - `@MappedSuperclass`: Diese Klasse wird nicht als eigene Tabelle gespeichert, sondern
- *   von anderen Entitätsklassen geerbt.
- * - `@Id`: Definiert die ID als Primärschlüssel.
+ * - `@MappedSuperclass`: Wird von anderen Entitätsklassen geerbt, aber nicht als eigene Tabelle gespeichert.
+ * - `@Id`: Markiert das `id`-Feld als Primärschlüssel.
  * - `@GeneratedValue(generator = "uuid2")`: Automatische Generierung einer UUID.
- * - `@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")`:
- *   Verwendet Hibernate zur Generierung von UUIDs.
+ * - `@GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")`: Hibernate UUID-Generator.
+ * - `@Convert(converter = UUIDBinaryConverter.class)`: Nutzt einen `AttributeConverter`, um `UUID` in `BINARY(16)` umzuwandeln.
  * - `@Column(name = "id", updatable = false, nullable = false, columnDefinition = "BINARY(16)")`:
- *   Speichert die UUID effizient als `BINARY(16)`, um Speicherplatz zu sparen.
- *
- * @version 1.0
- * @since 2024-07-26
+ *   - Speichert die UUID effizient als `BINARY(16)`.
+ *   - `updatable = false`: Die ID kann nachträglich nicht geändert werden.
+ *   - `nullable = false`: Die ID darf nicht `null` sein.
  */
-@MappedSuperclass // Markiert diese Klasse als Basisklasse für andere Entitäten.
+@MappedSuperclass
 public abstract class ExtendedEntity {
 
     /**
-     * **Eindeutige ID der Entität.**
+     * **Primärschlüssel der Entität als UUID.**
      *
-     * - `@Id`: Markiert dieses Feld als Primärschlüssel.
-     * - `@GeneratedValue(generator = "uuid2")`: Automatische Generierung einer UUID.
-     * - `@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")`:
-     *   Verwendet Hibernate, um eine UUID zu generieren.
-     * - `@Column(name = "id", updatable = false, nullable = false, columnDefinition = "BINARY(16)")`:
-     *   - Die ID ist nicht änderbar (`updatable = false`).
-     *   - Die ID darf nicht `null` sein (`nullable = false`).
-     *   - Speicherung als `BINARY(16)`, um Speicherplatz in der Datenbank zu sparen.
+     * - Automatische Generierung per Hibernate (`uuid2`).
+     * - Speicherung als `BINARY(16)` in der Datenbank.
      */
     @Id
     @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    @Convert(converter = UUIDBinaryConverter.class) // Nutzt den Konverter für BINARY(16)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "BINARY(16)")
     private UUID id;
 
     /**
      * **Standard-Konstruktor (geschützt, da abstrakte Klasse).**
      *
-     * Wird von Unterklassen genutzt.
+     * Wird von Unterklassen genutzt, um eine neue Instanz zu erstellen.
      */
     protected ExtendedEntity() {
     }
 
     /**
      * **Konstruktor mit ID-Parameter.**
+     *
+     * Wird verwendet, wenn eine spezifische UUID gesetzt werden soll.
      *
      * @param id Die eindeutige UUID der Entität.
      */
@@ -65,18 +57,18 @@ public abstract class ExtendedEntity {
     }
 
     /**
-     * **Getter für die ID.**
+     * **Gibt die UUID der Entität zurück.**
      *
-     * @return Die UUID der Entität.
+     * @return Die UUID des Objekts.
      */
     public UUID getId() {
         return id;
     }
 
     /**
-     * **Setter für die ID.**
+     * **Setzt eine neue UUID für die Entität.**
      *
-     * - Wird für die fluide API implementiert, um Methodenverkettung zu ermöglichen.
+     * Wird für Methodenverkettung (`Fluent API`) implementiert.
      *
      * @param id Die neue UUID der Entität.
      * @return Die aktuelle Instanz von `ExtendedEntity`.
