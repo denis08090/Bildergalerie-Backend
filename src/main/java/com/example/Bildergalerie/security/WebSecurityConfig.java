@@ -47,8 +47,9 @@ public class WebSecurityConfig {
             .authorizeHttpRequests(requests -> requests
                     .antMatchers(HttpMethod.POST, "/users/login").permitAll()
                     .antMatchers(HttpMethod.POST, "/users/register").permitAll()
-                    .antMatchers("/albums/**").authenticated()                    .anyRequest().authenticated())
-            .addFilterAfter(
+                    .antMatchers("/albums/**").hasAnyAuthority("CAN_CREATE_ALBUM", "CAN_WATCH_ALBUM") // Autoritätsprüfung                  .anyRequest().authenticated())
+                    .anyRequest().authenticated())
+                    .addFilterAfter(
                     new CustomAuthenticationFilter(new AntPathRequestMatcher("/users/login", "POST"),
                             authenticationManager(), jwtProperties), UsernamePasswordAuthenticationFilter.class)
             .addFilterAfter(new CustomAuthorizationFilter(userService, jwtProperties),
