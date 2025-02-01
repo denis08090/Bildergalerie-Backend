@@ -87,11 +87,13 @@ Dieses Modell ermöglicht eine flexible Verwaltung von Nutzern, Alben und Fotos,
 git clone https://github.com/denis08090/Bildergalerie-Backend
 ```
 
-```powershell
-git clone https://github.com/denis08090/Bildergalerie-Frontend
-```
-
 ### DB Konfiguration
+
+Erstelle eine SQL-Datenbank mit folgendem SQL Statement
+
+```SQL
+CREATE DATABASE IF NOT EXISTS bildergalerie CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+```
 
 erstelle einen User mit folgenden credentials:
 **username:** "bildergalerie"
@@ -105,7 +107,6 @@ spring.datasource.username=bildergalerie
 spring.datasource.password=bildergalerie
 ```
 
-Die Datenbank wird beim Start der Spring-Boot Applikation selbst erstellt, sofern diese noch nicht vorhanden ist.
 Die Tables und Columns werden durch die jeweiligen Entitätsklassen erstellt.
 
 siehe [dbscript.sql](https://github.com/denis08090/Bildergalerie-Backend/blob/main/src/main/resources/dbscript.sql)
