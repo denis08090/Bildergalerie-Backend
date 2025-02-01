@@ -9,18 +9,43 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Collections;
-import java.util.UUID;
 
+/**
+ * **Implementierung des `UserService` für die Benutzerverwaltung.**
+ *
+ * Diese Klasse erweitert `ExtendedServiceImpl<User>` und bietet zusätzliche Funktionen für:
+ * - **Registrierung eines neuen Benutzers** (`register()`).
+ * - **Laden eines Benutzers für die Authentifizierung** (`loadUserByUsername()`).
+ *
+ * **Genutzte Abhängigkeiten:**
+ * - `UserRepository`: Datenbankzugriff für Benutzer.
+ * - `RoleService`: Zugriff auf Rollen (z. B. `CLIENT`).
+ * - `BCryptPasswordEncoder`: Verschlüsselung des Benutzerpassworts.
+ *
+ * @version 1.0
+ * @since 2024-07-26
+ */
 @Service
 public class UserServiceImpl extends ExtendedServiceImpl<User> implements UserService {
 
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
-  private final RoleService roleService;  // Inject RoleService
+  private final RoleService roleService;  // Service für Rollenverwaltung
 
-
+  /**
+   * **Konstruktor mit Dependency Injection.**
+   *
+   * - `UserRepository repository`: Wird für die Datenbankabfragen genutzt.
+   * - `Logger logger`: Protokollierung von Benutzeraktionen.
+   * - `BCryptPasswordEncoder bCryptPasswordEncoder`: Sichere Passwortverschlüsselung.
+   * - `RoleService roleService`: Ermöglicht Zugriff auf Benutzerrollen.
+   *
+   * @param repository Das `UserRepository`, das mit der Datenbank interagiert.
+   * @param logger Logger für die Überwachung von Benutzeraktionen.
+   * @param bCryptPasswordEncoder Verschlüsselt Passwörter vor dem Speichern.
+   * @param roleService Bietet Zugriff auf Rollen.
+   */
   @Autowired
   public UserServiceImpl(UserRepository repository, Logger logger,
                          BCryptPasswordEncoder bCryptPasswordEncoder,
@@ -28,37 +53,66 @@ public class UserServiceImpl extends ExtendedServiceImpl<User> implements UserSe
     super(repository, logger);
     this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     this.roleService = roleService;
-
   }
 
+  /**
+   * **Lädt einen Benutzer anhand der E-Mail für die Authentifizierung.**
+   *
+   * - Wird von Spring Security genutzt, um Benutzer bei der Anmeldung zu identifizieren.
+   * - Konvertiert `User` in `UserDetailsImpl`.
+   *
+   * @param email Die E-Mail-Adresse des Benutzers.
+   * @return `UserDetails` für Spring Security.
+   * @throws UsernameNotFoundException Falls kein Benutzer mit der E-Mail existiert.
+   */
   @Override
-  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException { //nimmt username
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     return ((UserRepository) repository).findByEmail(email)
             .map(UserDetailsImpl::new)
-            .orElseThrow(() -> new UsernameNotFoundException(email));
+            .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
   }
 
+  /**
+   * **Registriert einen neuen Benutzer mit Standardrolle `CLIENT`.**
+   *
+   * - Prüft, ob der Benutzer `null` ist.
+   * - Prüft, ob das Passwort `null` oder leer ist.
+   * - Verschlüsselt das Passwort mit `BCryptPasswordEncoder`.
+   * - Weist die Rolle `CLIENT` zu.
+   * - Speichert den Benutzer in der Datenbank.
+   *
+   * **Fehlerszenarien:**
+   * - Falls der `User` `null` ist → `IllegalStateException`
+   * - Falls das Passwort leer oder `null` ist → `IllegalArgumentException`
+   * - Falls die Rolle `CLIENT` nicht existiert → `IllegalStateException`
+   *
+   * @param user Der Benutzer, der registriert werden soll.
+   * @return Der registrierte Benutzer.
+   * @throws IllegalStateException Falls Benutzer `null` ist oder die `CLIENT`-Rolle nicht gefunden wird.
+   * @throws IllegalArgumentException Falls das Passwort leer ist.
+   */
   @Override
   public User register(User user) {
     if (user == null) {
       throw new IllegalStateException("User object is null before saving!");
     }
 
-    // Falls das Passwort null oder leer ist
     if (user.getPassword() == null || user.getPassword().isEmpty()) {
       throw new IllegalArgumentException("Password must not be null or empty");
     }
 
+    // Verschlüsselung des Passworts
     user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
-    // Fetch the 'CLIENT' role from RoleService and assign it to the user
+    // Hole die `CLIENT`-Rolle aus `RoleService`
     Role clientRole = roleService.findByName("CLIENT");
 
     if (clientRole == null) {
       throw new IllegalStateException("Role CLIENT not found!");
     }
 
-    user.setRoles(Collections.singleton(clientRole)); // Assign the 'CLIENT' role to the user
+    // Weise die `CLIENT`-Rolle zu
+    user.setRoles(Collections.singleton(clientRole));
 
     return save(user);
   }
