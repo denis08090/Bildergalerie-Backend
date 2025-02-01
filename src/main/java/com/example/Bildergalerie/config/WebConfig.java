@@ -6,11 +6,11 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * Configuration class for setting up CORS settings.
+ * **Konfigurationsklasse für CORS-Einstellungen.**
  *
- * This class configures cross-origin resource sharing (CORS) to allow
- * the frontend and backend to communicate properly, particularly in a
- * development environment where they might be hosted on different ports.
+ * Diese Klasse ermöglicht Cross-Origin Resource Sharing (CORS), sodass das Frontend
+ * (z. B. eine React-Anwendung auf `http://localhost:3000`) mit dem Backend kommunizieren kann.
+ * Besonders in der Entwicklungsumgebung sind Frontend und Backend oft auf unterschiedlichen Ports gehostet.
  *
  * @version 1.0
  * @since 2024-07-26
@@ -20,20 +20,26 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig {
 
     /**
-     * Konfiguriert CORS-Mappings.
+     * Erstellt eine Spring-Bean, die CORS-Mappings konfiguriert.
      *
-     * @return WebMvcConfigurer, um CORS-Konfigurationen festzulegen.
+     * @return Ein `WebMvcConfigurer`, um CORS-Konfigurationen festzulegen.
      */
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
+
+            /**
+             * Konfiguriert globale CORS-Regeln für das Backend.
+             *
+             * @param registry Die CORS-Registry, die die Mappings speichert.
+             */
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000") // React App läuft normalerweise auf Port 3000
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*")
-                        .allowCredentials(true);
+                registry.addMapping("/**") // Gilt für alle Endpunkte des Backends
+                        .allowedOrigins("http://localhost:3000") // Erlaubt Anfragen von diesem Ursprung (React-App)
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Erlaubt diese HTTP-Methoden
+                        .allowedHeaders("*") // Alle Header-Typen sind erlaubt
+                        .allowCredentials(true); // Ermöglicht das Senden von Cookies & Authentifizierungsdaten
             }
         };
     }

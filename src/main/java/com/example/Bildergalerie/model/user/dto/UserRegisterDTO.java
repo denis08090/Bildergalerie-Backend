@@ -1,43 +1,108 @@
 package com.example.Bildergalerie.model.user.dto;
 
 import com.example.Bildergalerie.generic.ExtendedDTO;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
 import javax.persistence.Column;
 import java.util.UUID;
 
+/**
+ * **DTO für die Benutzerregistrierung (`UserRegisterDTO`).**
+ *
+ * Dieses DTO wird verwendet, wenn sich ein neuer Benutzer registriert.
+ * Es enthält Validierungsregeln für die eingegebenen Daten.
+ *
+ * **Validierung:**
+ * - `@NotEmpty`: Stellt sicher, dass das Feld nicht leer ist.
+ * - `@Size(min, max)`: Definiert eine Mindest- und Maximallänge.
+ * - `@Email`: Prüft, ob eine gültige E-Mail-Adresse eingegeben wurde.
+ * - `@Min`: Mindestalter für die Registrierung.
+ *
+ * @version 1.0
+ * @since 2024-07-26
+ */
 public class UserRegisterDTO extends ExtendedDTO {
 
+  /**
+   * **Vorname des Benutzers.**
+   *
+   * - Darf nicht leer sein (`@NotEmpty`).
+   */
   @NotEmpty(message = "First name is required")
   private String firstName;
-  @NotEmpty(message = "{javax.validation.constraints.LastName.Empty.message}")
+
+  /**
+   * **Nachname des Benutzers.**
+   *
+   * - Darf nicht leer sein (`@NotEmpty`).
+   */
+  @NotEmpty(message = "Last name is required")
   private String lastName;
 
+  /**
+   * **Benutzername (muss eindeutig sein).**
+   *
+   * - Darf nicht leer sein (`@NotEmpty`).
+   * - Muss zwischen 1 und 50 Zeichen lang sein (`@Size`).
+   * - Ist in der Datenbank **eindeutig** (`@Column(unique = true, nullable = false)`).
+   */
   @NotEmpty(message = "Username must not be empty")
   @Size(min = 1, max = 50, message = "Username must be between 1 and 50 characters")
   @Column(unique = true, nullable = false)
   private String userName;
 
-
-  @Email
+  /**
+   * **E-Mail-Adresse des Benutzers.**
+   *
+   * - Muss eine gültige E-Mail-Adresse sein (`@Email`).
+   */
+  @Email(message = "Please provide a valid email address")
   private String email;
 
-  @NotEmpty(message = "{javax.validation.constraints.Password.Required.Empty.message}")
+  /**
+   * **Passwort des Benutzers.**
+   *
+   * - Darf nicht leer sein (`@NotEmpty`).
+   * - Muss mindestens 6 Zeichen lang sein (`@Size`).
+   */
+  @NotEmpty(message = "Password must not be empty")
   @Size(min = 6, message = "Password must be at least 6 characters long")
   private String password;
 
-
-
-  @NotNull(message = "{javax.validation.constraints.Age.Required.Empty.message}")
-  @Min(value = 1, message = "{javax.validation.constraints.Age.greater.Empty.message}")
+  /**
+   * **Alter des Benutzers.**
+   *
+   * - Darf nicht null sein (`@NotNull`).
+   * - Muss mindestens 1 Jahr alt sein (`@Min(1)`).
+   */
+  @NotNull(message = "Age is required")
+  @Min(value = 1, message = "Age must be greater than 0")
   private Integer age;
 
+  /**
+   * **Anzahl der Seeds (optionales Feld, keine Validierung).**
+   */
   public int seeds;
 
+  // **Konstruktoren**
+
+  /**
+   * **Standard-Konstruktor.**
+   */
   public UserRegisterDTO() {
   }
 
+  /**
+   * **Konstruktor zur Initialisierung eines `UserRegisterDTO`-Objekts.**
+   *
+   * @param id        Die UUID des Benutzers.
+   * @param firstName Der Vorname.
+   * @param lastName  Der Nachname.
+   * @param email     Die E-Mail-Adresse.
+   * @param password  Das Passwort.
+   * @param age       Das Alter.
+   * @param userName  Der Benutzername.
+   */
   public UserRegisterDTO(UUID id, String firstName, String lastName, String email, String password, Integer age, String userName) {
     super(id);
     this.firstName = firstName;
@@ -47,6 +112,8 @@ public class UserRegisterDTO extends ExtendedDTO {
     this.age = age;
     this.userName = userName;
   }
+
+  // **Getter und Setter mit Fluent API**
 
   public String getFirstName() {
     return firstName;
@@ -93,13 +160,12 @@ public class UserRegisterDTO extends ExtendedDTO {
     return this;
   }
 
-  public String getUserName() { return userName; }
+  public String getUserName() {
+    return userName;
+  }
 
-  public UserRegisterDTO setUserName(String userName){
+  public UserRegisterDTO setUserName(String userName) {
     this.userName = userName;
     return this;
   }
-
-
-
 }
