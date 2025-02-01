@@ -5,25 +5,31 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public record UserDetailsImpl(User user) implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    if (user.getRoles() == null) {
-      throw new IllegalStateException("User has no roles assigned!");
+    if (user.getRoles() == null || user.getRoles().isEmpty()) {
+      System.out.println("⚠️ WARNUNG: User hat keine Rollen! (" + user.getEmail() + ")");
+      return List.of(new SimpleGrantedAuthority("ROLE_USER")); // ✅ Fallback, falls keine Rolle zugewiesen ist
     }
+
     return user.getRoles().stream()
             .flatMap(r -> {
-              if (r.getAuthorities() == null) {
-                throw new IllegalStateException("Role has no authorities!");
+              if (r.getAuthorities() == null || r.getAuthorities().isEmpty()) {
+                System.out.println("⚠️ WARNUNG: Rolle " + r.getName() + " hat keine Authorities!");
+                return Stream.of(new SimpleGrantedAuthority(r.getName())); // ✅ Direkt die Rolle als Authority setzen
               }
-              return r.getAuthorities().stream();
+              return r.getAuthorities().stream()
+                      .map(a -> new SimpleGrantedAuthority(a.getName()));
             })
-            .map(a -> new SimpleGrantedAuthority(a.getName()))
             .collect(Collectors.toList());
   }
+
 
   @Override
   public String getPassword() {

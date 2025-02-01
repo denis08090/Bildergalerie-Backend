@@ -1,60 +1,47 @@
 package com.example.Bildergalerie.security.helpers;
 
+import javax.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
-
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import java.util.Base64;
 
 @Component
 @ConfigurationProperties(prefix = "jwt")
 public class JwtProperties {
 
-  private long expirationMillis = 86400000; // Standard: 1 Tag (24h)
-  private String issuer = "your_application";
+  private static final Logger LOGGER = LoggerFactory.getLogger(JwtProperties.class);
+
+  private long expirationMillis;
+  private String issuer;
   private String secret;
+
+  @PostConstruct
+  public void logJwtSecret() {
+    LOGGER.info("✅ Loaded JWT Secret: {}", secret);
+  }
 
   public long getExpirationMillis() {
     return expirationMillis;
   }
 
-  public JwtProperties setExpirationMillis(long expirationMillis) {
+  public void setExpirationMillis(long expirationMillis) {
     this.expirationMillis = expirationMillis;
-    return this;
   }
 
   public String getIssuer() {
     return issuer;
   }
 
-  public JwtProperties setIssuer(String issuer) {
+  public void setIssuer(String issuer) {
     this.issuer = issuer;
-    return this;
   }
 
   public String getSecret() {
-    if (secret == null || secret.isBlank()) {
-      secret = generateSecretKey();
-      System.out.println("⚠️ Kein JWT Secret gefunden! Neuer Secret Key wurde generiert: " + secret);
-    }
     return secret;
   }
 
-  public JwtProperties setSecret(String secret) {
+  public void setSecret(String secret) {
     this.secret = secret;
-    return this;
-  }
-
-  private String generateSecretKey() {
-    try {
-      KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
-      keyGen.init(256);
-      SecretKey key = keyGen.generateKey();
-      return Base64.getEncoder().encodeToString(key.getEncoded());
-    } catch (Exception e) {
-      throw new RuntimeException("Fehler beim Generieren des Secret Keys", e);
-    }
   }
 }

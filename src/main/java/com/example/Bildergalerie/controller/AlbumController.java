@@ -5,6 +5,7 @@ import com.example.Bildergalerie.model.Album.AlbumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,6 +44,7 @@ public class AlbumController {
      * @param album The album to be added
      * @return The added album
      */
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping
     public Album addAlbum(@RequestBody Album album) {
         return albumRepository.save(album);
@@ -55,6 +57,7 @@ public class AlbumController {
      * @param title The new title of the album
      * @return ResponseEntity with the updated album
      */
+
     @PutMapping("/{albumId}")
     public ResponseEntity<Album> updateAlbum(
             @PathVariable Long albumId,
@@ -76,6 +79,7 @@ public class AlbumController {
      * @param albumId The ID of the album to delete
      * @return ResponseEntity with no content
      */
+    @PreAuthorize("hasAuthority('USER')")
     @DeleteMapping("/deleteAlbum/{albumId}")
     public ResponseEntity<Void> deleteAlbum(@PathVariable Long albumId) {
         Optional<Album> existingAlbumOptional = albumRepository.findById(albumId);

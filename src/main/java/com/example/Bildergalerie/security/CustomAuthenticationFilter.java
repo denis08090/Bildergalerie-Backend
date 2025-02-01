@@ -14,6 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
+import java.util.stream.Collectors;
+import org.springframework.security.core.GrantedAuthority;
+
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -47,13 +51,18 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
     byte[] keyBytes = Decoders.BASE64.decode(secret);
 
     return Jwts.builder()
-            .setClaims(Map.of("sub", userDetailsImpl.user().getId().toString(), "authorities",
-                    userDetailsImpl.getAuthorities()))
+            .setClaims(Map.of(
+                    "sub", userDetailsImpl.user().getId().toString(),
+                    "authorities", userDetailsImpl.getAuthorities().stream()
+                            .map(GrantedAuthority::getAuthority) // ✅ Konvertiere die Rollen in Strings
+                            .collect(Collectors.toList())
+            ))
             .setIssuedAt(new Date())
             .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getExpirationMillis()))
             .setIssuer(jwtProperties.getIssuer())
             .signWith(Keys.hmacShaKeyFor(keyBytes))
             .compact();
+
   }
 
   @Override
@@ -69,11 +78,20 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
 
   @Override
   protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-      FilterChain chain,
-      Authentication authResult) {
-    response.addHeader(HttpHeaders.AUTHORIZATION,
-        AuthorizationSchemas.BEARER + " " + generateToken(authResult));
+                                          FilterChain chain, Authentication authResult) {
+    String token = generateToken(authResult);
+
+    response.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+    response.setContentType("application/json");
+    response.setCharacterEncoding("UTF-8");
+
+    try {
+      response.getWriter().write("{\"token\": \"" + token + "\"}");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
+
 
   @Override
   protected void unsuccessfulAuthentication(HttpServletRequest request,

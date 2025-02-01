@@ -40,10 +40,9 @@ public class User extends ExtendedEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_role",
-            joinColumns = @JoinColumn(name = "users_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
-    )
-    private Set<Role> roles = new HashSet<>();
+            joinColumns = @JoinColumn(name = "users_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    ) Set<Role> roles = new HashSet<>();
 
 
     public String getUserName() {

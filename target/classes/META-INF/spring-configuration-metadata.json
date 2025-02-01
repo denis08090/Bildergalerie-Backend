@@ -11,13 +11,12 @@
       "name": "jwt.expiration-millis",
       "type": "java.lang.Long",
       "sourceType": "com.example.Bildergalerie.security.helpers.JwtProperties",
-      "defaultValue": 86400000
+      "defaultValue": 0
     },
     {
       "name": "jwt.issuer",
       "type": "java.lang.String",
-      "sourceType": "com.example.Bildergalerie.security.helpers.JwtProperties",
-      "defaultValue": "your_application"
+      "sourceType": "com.example.Bildergalerie.security.helpers.JwtProperties"
     },
     {
       "name": "jwt.secret",

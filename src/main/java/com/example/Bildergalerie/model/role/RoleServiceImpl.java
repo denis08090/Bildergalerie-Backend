@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.NoSuchElementException;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -18,17 +19,17 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role findByName(String name) {
         return roleRepository.findByName(name)
-                .orElseThrow(() -> new RuntimeException("Error: Role " + name + " not found."));
+                .orElseThrow(() -> new NoSuchElementException("Error: Role " + name + " not found."));
     }
+
 
     @PostConstruct
     public void initRoles() {
-        if (!roleRepository.findByName("CLIENT").isPresent()) {
+        roleRepository.findByName("CLIENT").orElseGet(() -> {
             Role clientRole = new Role();
             clientRole.setName("CLIENT");
-            roleRepository.save(clientRole);
-        }
+            return roleRepository.save(clientRole);
+        });
     }
-
 }
 
